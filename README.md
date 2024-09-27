@@ -1,10 +1,6 @@
 # nChain-Identity-did-method
 
 
-1
-
-
-
 
 ## Change Log
 
@@ -28,11 +24,7 @@
 
 
 
-### Distribution
-
-
-
-Document maturity	       A - Draft | B - Revision | C - Final | D - Approved | E - Archived | F - Dispose
+### Menu
 
 
 
