@@ -513,3 +513,36 @@ One of the main features of this DID method is to enhance immediate revocation. 
 # 8. UTXO DID Method Normative Reference
 
 ## 8.1 DID Syntax 
+
+* **DID method name:** bsv 
+* **DID method specific identifier:** 64 characters long hexadecimal presentation of BSV Blockchain transaction ID 
+
+The hexadecimal presentation MUST use lowercase characters for hexadecimal digits a–f.
+
+```bash
+Example: did:bsv:8280eadd84515d071e942f1548af7891e0182bf83e7b5848a02b0a58543fbf5f
+```
+
+## 8.2 Verifiable Data Registry
+
+UTXO DID method SHOULD use BSV Blockchain as a public ledger to store the DID related data and statuses. Each DID is recorded as a sequence of chained transactions of the following kinds:
+* DID issuance transaction, which is the first transaction in the DID chain
+* DID document transaction, a transaction which OP_RETURN data contains a version of the DID document
+* DID revocation transaction, which MUST be the last transaction in the DID chain and which presence invalidates DID
+Owing to the blockchain design, each of the DID document transactions MUST be preceded by either DID issuance transaction or a special DID funding transaction which provide additional funds for mining fees. DID funding transactions do not change the state of DID.
+
+Below text uses the following symbols that refer to SECP256K1 private and public keys:
+* C0 , PKC0	DID controller’s  private and public key, respectively.
+* S0, PKS0	DID subject’s private and public keys, respectively.
+* SigC0, SigS0	Signatures made by using DID controller’s or DID subject’s private keys, respectively.
+
+It also uses term `identityCode`. This is a code that identifies the DID controller that created by transactions. This code MUST be present, and it SHOULD be unique.
+
+
+
+
+
+
+
+
+
