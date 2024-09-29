@@ -49,9 +49,9 @@ This specification is intended for software implementers that want to adopt this
 ### 2.3 Scope
 
 The specifications include: 
-•	The use of a public blockchain as a data registry. 
-•	Details and specifications on how to link the public key to a blockchain transaction (Tx). 
-•	Transaction anatomy and a description of the signature structure: a multi-signature for DID issuance and DID Document creation. These signatures are coordinated to the DID Subject and the DID Controller by a component service that creates and manages the DID called a DID manager which is run by an authorized entity. DID issuance can be triggered by any entity, or any wallet connected with the DID manager. The specifications also explain how to link a blockchain transaction to a status check from the DID manager. 
+* The use of a public blockchain as a data registry. 
+* Details and specifications on how to link the public key to a blockchain transaction (Tx). 
+* Transaction anatomy and a description of the signature structure: a multi-signature for DID issuance and DID Document creation. These signatures are coordinated to the DID Subject and the DID Controller by a component service that creates and manages the DID called a DID manager which is run by an authorized entity. DID issuance can be triggered by any entity, or any wallet connected with the DID manager. The specifications also explain how to link a blockchain transaction to a status check from the DID manager. 
 This design allows DID status verification to be performed independently of the DID issuer and the DID manager which provides privacy enhancement, as the DID issuer and the DID manager are not aware of the status checks being performed by the verifier. Consequently, users can verify the status of their DIDs without revealing their actions to the issuers, which also increases the privacy in the verification process. This method can be applied universally across different UTXO-based blockchain networks, making it a versatile solution for decentralized identity management.
 
 
