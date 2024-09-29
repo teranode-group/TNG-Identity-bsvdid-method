@@ -237,7 +237,7 @@ _Figure 4: How the Subject and the Controller keys are link to the DID?_
 
 <br>
 
-**Data payloads in the transaction outputs.** 
+**C_Data payloads in the transaction outputs.** 
 <br> After OP_RETURN we can find a data payload. This data does not affect the spending conditions, and it is described below: 
 - `BSV DID` Identifier specifying this is a transaction associated with the BSV DID Method. 
 - `Identity Code` DID Controller configuration identifier. 
@@ -246,7 +246,7 @@ _Figure 4: How the Subject and the Controller keys are link to the DID?_
 
 <br> 
 
-#### Implementation Example
+**D_Implementation Example**
 
 Below we provide a detailed implementation of the BSV DID Method as a reference example for DID issuance. This specification covers the process of requesting a DID from the subject to the DID controller. It includes two specific examples of the implementation:
 * **DID Controller Role:** The DID controller can be run by any entity. It is important to note that the BSV DID method does not require a centralized controller. Any organization or entity can run a DID controller and create a DID for itself, as specified in *[See Section 3.3. DID Controller](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#33-did-controller-and-did-resolver)*.
