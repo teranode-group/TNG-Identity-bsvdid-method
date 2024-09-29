@@ -1,263 +1,127 @@
-# nChain-Identity-did-method
-
-
-
-## Change Log
-
-
-
-### Revision History
-
-
-
-
-
-
-
-### Production
-
-
-
-
-
-
-
-
-
-### Menu
-
-
-
-
-
+# nChain Identity DID Method
 
 ## Contents
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-1. Abstract
-This document outlines a method for the issuance, status updates, key rotation, and revocation of Decentralized Identifiers (DIDs) using a public, UTXO-based blockchain as a data registry. In this approach, DIDs are issued and managed through transactions recorded on the blockchain, leveraging its transparency and immutability. The blockchain allows a UTXO to be spent only once, which provides a double spend protection, resulting in a final spent state that is permanent and verified by the network. This characteristic makes the UTXO model ideal for reflecting the status of a DID, such as revocation, which, is irreversible once executed. DIDs can also be updated by linking a transaction chain to the DID Document, with a new version controlled solely by the DID Controller. Our approach supports both issuer-initiated and user-initiated status updates and revocation requests, ensuring secure and verifiable DID management within a distributed ecosystem. This document describes key rotation methods for DID recovery. We described a proposal to accomplish low latency for DID resolution and a governance mechanisms to guide the implementation and deployment of DIDs, emphasizing the critical role of the blockchain in maintaining a reliable and transparent data registry.
-
+- ABSTRACT
+- INTRODUCTION
+    - Purpose
+    - Intended audience
+    - Scope
+    - Compliance
+    - Terminology
+- SPECIFICATION OVERVIEW
+    - Prerequisites
+    - UTXO DID Method
+    - DID Controller and DID Resolver
+    - DID Operations
+- GOVERNANCE MODEL USING DID BSV METHOD
+- LOW LATENCY DID RESOLUTION
+- DATA REGISTER ANALYSIS
+- PRIVACY CONSIDERATIONS
+    - UTXO DID Method Normative Reference
+    - DID Syntax
+    - Verifiable Data Registry
+    - DID Operations
+- REFERENCES AND READING MATERIAL
+
+---
+# Main Title
+
+## 1. Abstract
+This document outlines a method for the issuance, status updates, key rotation, and revocation of Decentralized Identifiers (DIDs) using a public, UTXO-based blockchain as a data registry. In this approach, DIDs are issued and managed through transactions recorded on the blockchain, leveraging its transparency and immutability. The blockchain allows a UTXO to be spent only once, which provides a double spend protection, resulting in a final spent state that is permanent and verified by the network. This characteristic makes the UTXO model ideal for reflecting the status of a DID, such as revocation, which, is irreversible once executed. DIDs can also be updated by linking a transaction chain to the DID Document, with a new version controlled solely by the DID Controller. Our approach supports both issuer-initiated and user-initiated status updates and revocation requests, ensuring secure and verifiable DID management within a distributed ecosystem. This document describes key rotation methods for DID recovery. We described a proposal to accomplish low latency for DID resolution and a governance mechanism to guide the implementation and deployment of DIDs, emphasizing the critical role of the blockchain in maintaining a reliable and transparent data registry. 
 
 
 ## 2. Introduction
 
-
-
 ### 2.1 Purpose 
 
-The purpose of this documentation is to specify a DID method for DID issuance and management. This method is aimed to follow W3C specifications. The main differentiator is to feature an enhanced DID Document status update and revocation method that can be implemented in any public, UTXO blockchain used as the data register. The advantages are a follow.
-
-The double spend protection of blockchain means that transaction chains provide an immutable, unique, timestamped sequence of events. We use this to record DID issuance, status update, key rotation, and revocation. UTXO-based blockchains support parallelisation of transaction validation which makes them scalable.
-
-The digital signatures already present in blockchain transactions are used to provide the DID authorisation system. It supports hierarchal public key infrastructure that establishes governance and hierarchical authorisation over DID issuance. 
-
-The programmability of blockchain transactions means that multi-party authorisation schemes can be easily implemented. For example, by allowing either a DID Controller or a DID Subject to revoke a DID using a 1-of-2 multi-signature scheme in a transaction locking script.
-
+The purpose of this documentation is to specify a DID method for DID issuance and management. This method is aimed to follow W3C specifications. The main differentiator is to feature an enhanced DID Document status update and revocation method that can be implemented in any public, UTXO blockchain used as the data register. The advantages are a follow. 
+* The double spend protection of blockchain means that transaction chains provide an immutable, unique, timestamped sequence of events. We use this to record DID issuance, status update, key rotation, and revocation. UTXO-based blockchains support parallelisation of transaction validation which makes them scalable.
+* The digital signatures already present in blockchain transactions are used to provide the DID authorisation system. It supports hierarchal public key infrastructure that establishes governance and hierarchical authorisation over DID issuance.
+* The programmability of blockchain transactions means that multi-party authorisation schemes can be easily implemented. For example, by allowing either a DID Controller or a DID Subject to revoke a DID using a 1-of-2 multi-signature scheme in a transaction locking script.
 
 
 ### 2.2 Intended audience
 
-This specification is intended for software implementers that want to adopt this method for the creation and verification of Decentralized Identifiers. The implementation of this method was chosen to be on the Bitcoin SV blockchain due to its low transaction fees, high throughput, and instant transaction verification. But it is understood that it can be implemented in any UTXO-based blockchain. These specifications assume a basic understanding of programming and blockchain technology.
-
+This specification is intended for software implementers that want to adopt this method for the creation and verification of Decentralized Identifiers. The implementation of this method was chosen to be on the BSV Blockchain due to its low transaction fees, high throughput, and instant transaction verification. But it is understood that it can be implemented in any UTXO-based blockchain. These specifications assume a basic understanding of programming and blockchain technology.
 
 
 ### 2.3 Scope
 
 The specifications include: 
-
-The use of a public blockchain as a data registry. 
-
-Details and specifications on how to link the public key to a blockchain transaction (Tx). 
-
-Transaction anatomy and a description of the signature structure: a multi-signature for DID issuance and DID Document creation. These signatures are coordinated to the DID Subject and the DID Controller by a component service that creates and manages the DID called a DID manager which is run by an authorized entity. DID issuance can be triggered by any entity, or any wallet connected with the DID manager. The specifications also explain how to link a blockchain transaction to a status check from the DID manager. 
-
+•	The use of a public blockchain as a data registry. 
+•	Details and specifications on how to link the public key to a blockchain transaction (Tx). 
+•	Transaction anatomy and a description of the signature structure: a multi-signature for DID issuance and DID Document creation. These signatures are coordinated to the DID Subject and the DID Controller by a component service that creates and manages the DID called a DID manager which is run by an authorized entity. DID issuance can be triggered by any entity, or any wallet connected with the DID manager. The specifications also explain how to link a blockchain transaction to a status check from the DID manager. 
 This design allows DID status verification to be performed independently of the DID issuer and the DID manager which provides privacy enhancement, as the DID issuer and the DID manager are not aware of the status checks being performed by the verifier. Consequently, users can verify the status of their DIDs without revealing their actions to the issuers, which also increases the privacy in the verification process. This method can be applied universally across different UTXO-based blockchain networks, making it a versatile solution for decentralized identity management.
-
 
 
 ### 2.4 Compliance
 
-Our implementation of the DID method can appropriately handle and enforce the issuance, status check revocation, and verification status of the DID and DID Document in accordance with the specifications presented by the , and the . 
-
-
-
+Our implementation of the DID method can appropriately handle and enforce the issuance, status check revocation, and verification status of the DID and DID Document in accordance with the specifications presented by the [W3C](https://www.w3.org/TR/did-core/#sotd), and the [DIF](https://decentralized-id.com/) .
 
 
 ### 2.5 Terminology
 
-The following terms are used to describe concepts in this specification. 
+Please review terminology here. 
 
+---
 
-
-## 
-3. Specification
-
-
-
-
+## 3. Specification Overview
+_This section is not normative_
 
 ### 3.1 Prerequisites 
-
-According to  and as a requirement for the deigns of this method, the DID needs to fulfil the basic premise principles listed below:  
-
-A Permanent identifier (URN).
-
-Be cryptographically verifiable. 
-
-Be decentralised (no central registration authority required).
-
-Easy and economical to create.
-
-The DID is always required to resolve (associated with) to a DID Document.
-
-The DID Subject is not always the administrator of its DID. It depends on use case scenario.
-
+According to [W3C specifications](https://www.w3.org/TR/did-core/) and as a requirement for the deigns of this method, the DID needs to fulfil the basic premise principles listed below:  
+* A Permanent identifier (URN).
+* Be cryptographically verifiable.
+* Be decentralised (no central registration authority required).
+* Easy and economical to create.
+* The DID is always required to resolve (associated with) to a DID Document.
+* The DID Subject is not always the administrator of its DID. It depends on use case scenario.
 
 Similarly, the DID Document needs to satisfy the following:  
-
-The DID Document needs to be publicly available. 
-
-The DID Document must contain: 
-
-One or more keys to authenticate the DID subject.
-
-One or more Services associated with DID subject.
-
-Additional metadata like digital signatures, timestamps, and other cryptographic proofs. 
-
-
-
-
+* The DID Document needs to be publicly available. 
+* The DID Document must contain:
+  * One or more keys to authenticate the DID subject.
+  * One or more Services associated with DID subject.
+  * Additional metadata like digital signatures, timestamps, and other cryptographic proofs. 
 
 ### 3.2 UTXO DID Method 
 
-In this section we present an overview of the DID method. Our proposal introduces a new Decentralized Identifier (DID) method that links a UTXO and the DID with the public key of the subject and manages the DID status and revocation through transaction spending checks. We use the BSV blockchain as the verifiable data registry.
+In this section we present an overview of the DID method. Our proposal introduces a new Decentralized Identifier (DID) method that links a UTXO and the DID with the public key of the subject and manages the DID status and revocation through transaction spending checks. We use the BSV Blockchain as the verifiable data registry.
+
+The UTXO DID method uses the following method name: **bsv**
+
+#### The DID
+
+The issuance of a DID using this method is performed by publishing a blockchain transaction:**Tx0**.This transaction has a single input and a single output. The transaction ID (**TxID**) becomes the DID for the subject. The **TxID** can be easily calculated by either controller or subject and, because of the properties of blockchain it would never be repeated. It is also 
+easily recognisable by independent third-party platforms, such as blockchain explorers. 
+
+_1. Representation of a DID as per W3C specification_
 
 
+```bash
+DID:example:123456789abcdefghi
+```
+Where fields are broken down as follows:
+| DID:     | example:     | 123456789abcdefghi          |
+|----------|--------------|-----------------------------|
+| Scheme | DID Method | DID Method- Specific Identifier |
+
+_2. Representation of a DID using UTXO method_
+
+```bash
+DID:bsv:21f2dae26817752b8f92c51a49a898e287ad133a4e7ed64b4909f7b62f0bbb6e
+```
+Where fields are broken down as follows:
+| DID:     | bsv:     | 21f2dae26817752b8f92c51a49a898e287ad133a4e7ed64b4909f7b62f0bbb6e|
+|----------|--------------|-----------------------------|
+| Scheme | DID Method | DID Method- Specific Identifier |
 
 
+#### The DID Document
 
+he DID Document is published via a subsequent transaction **Tx1** that spends the output of **Tx0**. The relationship between the DID, the DID document, and the blockchain transactions is given in Figure 1.  The transaction **Tx1** contains a single input and a single output. The output contains the locking script, the DID Document and the funds covering the mining fee of the next transaction. **Tx1** spending the output of **Tx0** allows an external observer to conclude that there is a link between both blockchain transactions. The status of **Tx1** output indicates the latest status of the DID Document. 
 
-
-##### The DID
-
-The issuance of a DID using this method is performed by publishing a blockchain transaction: Tx0.This transaction has a single input and a single output. The TxID becomes the DID for the subject. The TxID  can be easily by either controller or subject and, because of the properties of blockchain it would never be repeated. It is also 
-
-easily recognisable by independent third-party platforms, such as explorers. 
-
-
-
-
-
-
-
-##### The DID Document
-
-The DID Document is published via a subsequent transaction Tx1 that spends the output of Tx0. The relationship between the DID, the DID document, and the blockchain transactions is given in Figure 3.  The transaction Tx1 contains a single input and a single output. The output contains the locking script, the DID Document and the funds Tx1 the output of Tx0 allows an external observer to conclude that there is a link between both blockchain transactions. The status of Tx1 output indicates the latest status of the DID Document. 
 
 
 
