@@ -122,8 +122,10 @@ Where fields are broken down as follows:
 
 he DID Document is published via a subsequent transaction **Tx1** that spends the output of **Tx0**. The relationship between the DID, the DID document, and the blockchain transactions is given in Figure 1.  The transaction **Tx1** contains a single input and a single output. The output contains the locking script, the DID Document and the funds covering the mining fee of the next transaction. **Tx1** spending the output of **Tx0** allows an external observer to conclude that there is a link between both blockchain transactions. The status of **Tx1** output indicates the latest status of the DID Document. 
 
+![Group 38](https://github.com/user-attachments/assets/de113931-75c8-462e-95ea-3e3bc1a70904)
 
 
+---
 
 ##### The DID Document Data Model
 
