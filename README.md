@@ -196,7 +196,7 @@ In this section, we will cover specifications to Create, Update, Read, and Revok
 
 <br>
 
-#### 3.4.1 Create
+### 3.4.1 Create
 
 In previous sections, we have explained how the DID and DID document are related through two transactions, and how the Controller issues a DID to itself. This section explains in detail the process of a DID Controller creating a DID and a DID Document for Subject, including the digital signatures and the transaction specification required. It also explains the use of signatures in blockchain transactions to bind the Subject and the Controller public keys to the DID and the DID Document. 
 
@@ -216,6 +216,7 @@ The Subject has a single key.
 
 **B_TxID1: DID Document transaction** 
 <br> This is a subsequent transaction that spends the output of the issuance transaction **Tx0**. This transaction has a single input and a single output. This output contains a data payload with the DID Document.  **Tx1** output is locked to a one-of-two multi-sig script signed either by Subject public key or the Controller public key. Once the input of **Tx1** is signed by both keys, the transaction is broadcasted to the network. When validated by miners it will read as resolved by the DID Resolver. 
+
 <br> 
 
 ![Figure 3: TX Anatomy](https://github.com/user-attachments/assets/19d37e3a-f249-4a01-806b-939ade99c7d1)
@@ -223,6 +224,7 @@ The Subject has a single key.
 
 ![Figure 4: How the Subject and the Controller keys are link to the DID?](https://github.com/user-attachments/assets/ca6b2419-2232-4933-9dce-880b6353aa72)
 
+<br>
 
 **Data payloads in the transaction outputs.** 
 <br> After OP_RETURN we can find a data payload. This data does not affect the spending conditions, and it is described below: 
@@ -233,83 +235,77 @@ The Subject has a single key.
 
 <br> 
 
-##### Implementation Example
+#### Implementation Example
 
 Below we provide a detailed implementation of the BSV DID Method as a reference example for DID issuance. This specification covers the process of requesting a DID from the subject to the DID controller. It includes two specific examples of the implementation:
-* **DID Controller Role:** The DID controller can be run by any entity. It is important to note that the BSV DID method does not require a centralized controller. Any organization or entity can run a DID controller and create a DID for itself, as specified in Section 3.3.
+* **DID Controller Role:** The DID controller can be run by any entity. It is important to note that the BSV DID method does not require a centralized controller. Any organization or entity can run a DID controller and create a DID for itself, as specified in *[See Section 3.3. DID Controller](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#33-did-controller-and-did-resolver)*.
 * **Database Persistence:** We demonstrate database persistence in this implementation as an example, although this is optional based on implementation preferences
 
-![Create DID](https://github.com/user-attachments/assets/f2059b35-4b8c-4f9c-92a0-2af73ac563b1)
+<br>
+
+![Figure 5: Create DID](https://github.com/user-attachments/assets/f2059b35-4b8c-4f9c-92a0-2af73ac563b1)
 
 
 
 <br>
 
-Key Considerations
-
-Proving Ownership: The DID Subject demonstrates ownership of their private key by signing transaction Tx1 and sending it to the DID Controller.
-
-Transaction Tx0: The output of <Tx0> is l the public keys of both the DID Controller and the DID Subject.
-
-Transaction Tx1: The input of <Tx1> requires signatures from both the Subject and the Controller. The output will contain the Controller-generated DID Document. This output is locked using a one-of-two multi-signature, allowing either the Controller or the Subject to spend the output. 
-
-
-
-Contents of the DID Document:
-
-DID of the Subject.
-
-Public Key associated with the DID Subject.
-
-DID of the Controller (this identifies the DID Controller by resolving their DID).
-
-Authentication method for the DID Controller (public key that can be verified on the signature input signing Tx1).
+#### Key Considerations
+* **Proving Ownership:** The DID Subject demonstrates ownership of their private key by signing transaction **Tx1** and sending it to the DID Controller.
+* **Transaction Tx0:** The output of **Tx0** is locked by the public keys of both the DID Controller and the DID Subject.
+* **Transaction Tx1:** The input of **Tx1** requires signatures from both the Subject and the Controller. The output will contain the Controller-generated DID Document. This output is locked using a one-of-two multi-signature, allowing either the Controller or the Subject to spend the output.
+* **Contents of the DID Document:**
+    * DID of the Subject.
+    * Public Key associated with the DID Subject.
+    * DID of the Controller (this identifies the DID Controller by resolving their DID).
+    * Authentication method for the DID Controller (public key that can be verified on the signature input signing **Tx1**).
 
 
 
-#### 3.4.2 
+### 3.4.2 Resolve
 
-The uses the DID (TxID) to find the transaction in the ledger and identify the linked transactions containing the DID Document. Once the DID Document has been identified the does a status check on the output of the Tx via the DID Resolver. Who will find the TxID given and track UTXO status until the last UTXO update is found. 
-
-
-
+The resolver uses the DID (TxID) to find the transaction in the ledger and identify the linked transactions containing the DID Document. Once the DID Document Tx has been identified the resolver does a status check on the output of the Tx via the DID Resolver. Who will find the TxID given and track UTXO status until the last UTXO update is found. 
+The DID Resolver can be independently built and operated, implemented according to this specification, or provided by a third party that supports the UTXO-DID method. This method permits the use of different resolvers, ensuring the users are not required to rely on or trust our specific implementation. 
 
 
+### 3.4.3 Update 
+
+#### A. DID Document Status Update
+
+In this section we explain how to change the content of the DID Document. The DID controller can change or update the status of the DID Document by creating a new transaction that spends the output of the latest transaction referring to the DID Document status. 
+
+<br>
+
+![Figure 6: Status Update](https://github.com/user-attachments/assets/617387e6-85f9-4b96-9ab2-e1bb994d5c5e)
+
+<br>
 
 
-The DID Resolver can be independently built and operated, implemented according to this specification, or provided by a third party that supports the UTXO-DID method. This method permits the use  different resolver, ensuring are not required to rely on or trust our specific implementation. 
-
-
-
-
-
-#### 3.4.3 Update 
-
-##### A. DID Document Status Update
-
-In this section we explain how to change the status of the DID Document. The DID controller can change or update the status of the DID Document by creating a new transaction that spends the output of the latest transaction referring to the DID Document status. See Figure 8. 
-
-
-
-
-
-##### B. Rotation of Keys
+#### B. Rotation of Keys
 
 Both subject and controller can initiate rotation of keys. How the rotation is performed depends on who is initiating and for what reason. Scheduled or voluntary rotations are different from rotations forced because keys have been compromised.
 
-###### Below we listed a series of use cases:
+**Below we listed a series of use cases:**
+* User Key Rotation with Valid Subject's Key
+* User Key Rotation upon Compromised Subject's Key
+* User Key Rotation because controller rotated its <PKC0> N key (user does not know if N was compromised or rotated regularly)
+* Controller rotation of valid or compromised M key <PKCD>
+* Controller rotation to update a valid <PKC0> key
+* Controller rotation upon <PKC0> key compromised
 
-User Key Rotation with Valid Subject's Key
+**Subject Key Rotation**
+<br> There are many reasons a Subject key need to be rotated: either regular operating reasons like voluntary, scheduled rotation to comply with policies, security reason like a key being compromised or to keep a valid controller attestation because the controller key has been rotated.
 
-User Key Rotation upon Compromised Subject's Key
+* **Subject Key’s compromised:** 
+<br> In case the subject’s key was compromised, it cannot be used to attest the rights, and the DID controller will have to establish some authentication process of the subject that does not refer to the compromised keys. Once the DID Subject is authenticated, the DID controller will discover that “PKS0” has been compromised and will sign a new issuance transaction using its PKC0 key. The output spent from the transaction referring to the latest DID Document transaction: TXn becomes the input of TXf (funding Tx). This transaction locked the new output to the controller’s unchanged public key and the subject’s new public key.
 
-User Key Rotation because controller rotated its <PKC0> N key (user does not know if N was compromised or rotated regularly)
+* **Subject Key’s not compromised:**
+<br> In all other cases the authentication of the subject via an external channel is not necessary as the old key is considered secure and DID Subject will have to use both old and new keys to attesting that it is authorized to rotate the key as well as prove that it owns the new key. 
 
-Controller rotation of valid or compromised M key <PKCD>
+<br> 
 
-Controller rotation to update a valid <PKC0> key
+![Frame 4](https://github.com/user-attachments/assets/ab93d8e5-956e-42d4-a2c4-a83d7ef87f3f)
 
-Controller rotation upon <PKC0> key compromised
+<br> 
 
 ####### Subject Key Rotation
 
