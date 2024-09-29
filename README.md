@@ -133,15 +133,18 @@ Where fields are broken down as follows:
 <br>
 
 #### 3.2.2 The DID Document
-<br> The DID Document is published via a subsequent transaction **Tx1** that spends the output of **Tx0**. The relationship between the DID, the DID document, and the blockchain transactions is given in Figure 1.  The transaction **Tx1** contains a single input and a single output. The output contains the locking script, the DID Document and the funds covering the mining fee of the next transaction. **Tx1** spending the output of **Tx0** allows an external observer to conclude that there is a link between both blockchain transactions. The status of **Tx1** output indicates the latest status of the DID Document. 
+
+The DID Document is published via a subsequent transaction **Tx1** that spends the output of **Tx0**. The relationship between the DID, the DID document, and the blockchain transactions is given in Figure 1.  The transaction **Tx1** contains a single input and a single output. The output contains the locking script, the DID Document and the funds covering the mining fee of the next transaction. **Tx1** spending the output of **Tx0** allows an external observer to conclude that there is a link between both blockchain transactions. The status of **Tx1** output indicates the latest status of the DID Document. 
 
 ![Figure 1: DID UTXO Status)](https://github.com/user-attachments/assets/11048f33-069b-44aa-9615-fecaf6e11e3f)
 
 _Figure 1: DID UTXO Status_
 
 <br>
+<br>
 
 ##### 3.2.2.1 The DID Document Data Model
+
 Our current implementation uses [W3C DID Document Data Model](https://www.w3.org/TR/did-core/#data-model) and is referenced in the DID Document. Below is a representative example of a DID Document data model.
 
 ```json
