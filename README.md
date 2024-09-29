@@ -538,8 +538,227 @@ Below text uses the following symbols that refer to SECP256K1 private and public
 
 It also uses term `identityCode`. This is a code that identifies the DID controller that created by transactions. This code MUST be present, and it SHOULD be unique.
 
+<br> 
+<br> 
+
+### 8.2.1 DID Issuance Transaction
+
+The issuance transaction has one input and one output. The input spends the funding UTXO provided out-of-band by the issuance transaction creator. The UTXO spent by this transaction MUST contain enough funds to cover mining fees for this and two next transactions.
+The OTXO of DID issuance transaction MUST provide funds to cover mining fees for two next transactions.
+The locking script of DID issuance transaction MUST require signatures by both DID controller and DID subject to spend it.
+The first segment of the OP_RETURN data payload MUST be set to the string literal BSVDID.
+The second segment of the OP_RETURN payload MUST be set to `identityCode`.
+The third segment of the OP_RETURN data payload MUST be set to string literal 1 (numerical digit 1).
+Implementations MAY add more segments for their own use.
+
+<img width="687" alt="Screenshot 2024-09-30 at 00 31 57" src="https://github.com/user-attachments/assets/f8e7c070-5b32-4aa9-9637-fa74db9f6cb4">
+
+<br> 
+<br> 
+
+### 8.2.2 DID Document Transaction
+
+The DID document transaction is funded either by the DID issuance transaction or DID funding transaction. It carries DID document in the third segment of OP_RETURN payload. The transaction has one input which MUST spend the UTXO provided by either DID issuance or DID funding transaction.
+
+The OTXO of DID document transaction MUST provide funds to cover mining fee for the next transaction.
+The locking script of DID document transaction MUST require signature by either DID controller or DID subject to spend it.
+The first segment of the `OP_RETURN` data payload MUST be set to the string literal BSVDID.
+The second segment of the `OP_RETURN` payload MUST be set to `identityCode`.
+The third segment of the `OP_RETURN` data payload MUST be set to the JSON string representing DID document.
+Implementations MAY add more segments for their own use.
 
 
+<img width="687" alt="Screenshot 2024-09-30 at 00 33 56" src="https://github.com/user-attachments/assets/171a77f4-e4ef-4986-84e6-97c5df933bea">
+
+
+The transaction ID (TxID) of the DID document transaction is the `versionId` of the DID document and resolvable as such.
+The timestamp of the block that contains the DID document transaction is the `versionTime` of the DID document and resolvable as such.
+
+<br> 
+<br> 
+
+### 8.2.3 DID Revocation Transaction
+
+The DID revocation is funded by the preceding DID document transaction. The transaction has one input which MUST spend the UTXO of the preceding DID document transaction. The transaction MUST one output with value 0, which makes it unspendable. The DID revocation transaction, when present, is thus the last transaction in the DID chain and invalidates the DID.
+
+The OTXO of DID revocation transaction MUST have value 0 and SHOULD have no other locking script but `OP_RETURN`.
+The first segment of the `OP_RETURN` data payload must be set to the string literal `BSVDID` .
+The second segment of the `OP_RETURN` payload MUST be set to `identityCode`.
+The third segment of the `OP_RETURN` data payload MUST be set to string literal 3 (numerical digit 3).
+Implementations MAY add more segments for their own use.
+
+<img width="676" alt="Screenshot 2024-09-30 at 00 36 51" src="https://github.com/user-attachments/assets/ccec368c-4764-405e-8c85-88f6cd920f88">
+
+<br> 
+<br> 
+
+### 8.2.4 DID Funding Transaction
+
+The DID funding transaction does not affect the DID state and is used only to bring in additional funds needed to extend the DID transaction chain. IT has two inputs and one output. The first input MUST spend the out-of-band UTXO provided by the creator of this transaction. This UTXO MUST provide enough funds to cover mining fee for two transactions. The second input MUST spend the UTXO of the preceding DID document transaction, which provides funds to cover mining fee for one transaction.
+
+The OTXO of DID funding transaction MUST provide funds to cover mining fee for two next transactions.
+The locking script of DID funding transaction MUST require signature by both DID controller and DID subject to spend it.
+The first segment of the OP_RETURN data payload MUST be set to the string literal BSVDID.
+The second segment of the OP_RETURN payload MUST be set to identityCode.
+The third segment of the OP_RETURN data payload MUST be set to string literal 2 (numerical digit 2).
+Implementations MAY add more segments for their own use.
+
+<img width="674" alt="Screenshot 2024-09-30 at 00 38 06" src="https://github.com/user-attachments/assets/944359f9-afdc-429c-a930-699123ffdfac">
+
+<br> 
+<br> 
+
+### 8.2.5 Example of DID Transaction Chain
+_THIS SECTION IS NOT NORMATIVE_
+
+The below example shows the DID transaction chain for DID that had one change in DID document and was finally revoked.
+
+<img width="711" alt="Screenshot 2024-09-30 at 00 39 44" src="https://github.com/user-attachments/assets/bb4bc762-0cfc-4fec-b9d5-3d887f5e5deb">
+
+<br> 
+<br> 
+
+## 8.3 DID Operations
+
+The authorisations to perform the operations rely on the properties of the blockchain that will reject the transactions which unlocking script will fail to unlock the addressed UTXOs. Both DID controller and DID subject must possess their own SECP256K1 keys which they MUST use to sign the DID transactions that are to be added to the DID’s chain of transactions.
+
+When DID subject and DID controller are implemented as separate entities, they each use their own DID, which when resolved will yield their respective public keys. The DID subject’s DID document list the DID of its controller:
+
+```json
+{
+    "@context": "https://www.w3.org/ns/did/v1",
+    "id": "did:bsv:1909a27e2f9c01dbc99f6391f77cd96032e00b92ff601584b7e227009055e6da",
+    "controller": "did:bsv:a2fc941316adc10d680c98a06bf68da88ec513c658a9dc5ef837058064b588f9",
+    "verificationMethod": [
+        {
+            "id": "did:bsv:1909a27e2f9c01dbc99f6391f77cd96032e00b92ff601584b7e227009055e6da#subject-key",
+            "type": "JsonWebKey2020",
+            "controller": "did:bsv:1909a27e2f9c01dbc99f6391f77cd96032e00b92ff601584b7e227009055e6da",
+            "publicKeyJwk": {
+                "kty": "EC",
+                "x": "l5sYB-y78yE-n8Fc1d9pZeVFYhGD8qWoFRk-abyr0p4",
+                "y": "XVcP352DcjrO374NW-4iNfUUWLLu_ZvcNhZtWPFURAg",
+                "crv": "secp256k1"
+            } } ],
+    "authentication": [
+        "did:bsv:1909a27e2f9c01dbc99f6391f77cd96032e00b92ff601584b7e227009055e6da#subject-key"
+    ]
+}
+```
+
+<br> 
+
+In SSI use, the DID document lists both public keys since the DID controller’s DID does not exist:
+
+```json
+{
+    "@context": "https://www.w3.org/ns/did/v1",
+    "id": "did:bsv:a2fc941316adc10d680c98a06bf68da88ec513c658a9dc5ef837058064b588f9",
+    "verificationMethod": [
+        {
+            "id": "did:bsv:a2fc941316adc10d680c98a06bf68da88ec513c658a9dc5ef837058064b588f9#subject-key",
+            "type": "JsonWebKey2020",
+            "controller": "did:bsv:a2fc941316adc10d680c98a06bf68da88ec513c658a9dc5ef837058064b588f9",
+            "publicKeyJwk": {
+                "kty": "EC",
+                "x": "oA39rl7p8GjPi4oVJRhesnhm9M4RKl0_dWs6EjDSm84",
+                "y": "l9j72B38c3VHlwk9-YtWyLovLFGU_Bkx1qa6DRLf5UQ",
+                "crv": "secp256k1"
+            }
+        }
+    ],
+    "service": [
+        {
+            "id": "did:bsv:a2fc941316adc10d680c98a06bf68da88ec513c658a9dc5ef837058064b588f9#controller-website",
+            "type": "LinkedDomains",
+            "serviceEndpoint": "<service-endpoint-url>"
+        }
+    ],
+    "authentication": [
+        {
+            "id": "did:bsv:a2fc941316adc10d680c98a06bf68da88ec513c658a9dc5ef837058064b588f9#auth",
+            "type": "JsonWebKey2020",
+            "controller": "did:bsv:a2fc941316adc10d680c98a06bf68da88ec513c658a9dc5ef837058064b588f9",
+            "publicKeyJwk": {
+                "kty": "EC",
+                "x": "-femws1TMAIQZLWNuhglkF9N6RrJAIJA7Yk64CavSEA",
+                "y": "BvoLuvdFvLv1p3j1myLZrhCBmYvoBHtp15ol_BB81Yk",
+                "crv": "secp256k1"
+            }
+        }
+    ]
+}
+```
+<br> 
+<br> 
+
+## 8.3.1 DID Creation 
+
+To create DID, DID controller MUST publish two transactions to the blockchain:
+* DID issuance transaction (see A.2.1 DID Issuance Transaction), and
+* DID Document transaction (see A.2.2 DID Document Transaction) containing the first version of the DID document)
+It is the DID controller’s responsibility to provide funding to cover mining fees for those transactions.
+When the DID subject is acting as own controller (SSI) it MUST own and use, C0/PKC0 representing DID controller and S0/PKS0 representing DID subject
+
+<br> 
+<br> 
+
+## 8.3.2 DID Document Updates
+
+To create a new version of DID document, DID controller must publish two transactions to the blockchain:
+* DID funding transaction (see A.2.4 DID Funding Transaction) which provides funds to cover mining fees of this and a new DID document transaction.
+* DID Document transaction (see A.2.2 DID Document Transaction) which publishes new version of DID document
+It is the DID controller’s responsibility to provide funding for DID funding transaction.
+While the DID funding transaction can be signed by either DID subject or DID controller, the DID document transaction itself must be signed by both. This ensures that both DID subject and DID controller agree on the new DID document contents.
+
+<br> 
+<br>
+
+## 8.3.3 DID Deactivation
+
+To deactivate, or revoke a DID, either DID subject or DID controller MUST publish DID revocation transaction (see A.2.3 DID Revocation Transaction). The funds for this transaction are already available in the UTXO of the last transaction of the DID’s transaction chain.
+
+<br> 
+<br>
+
+## 8.3.4 DID Resolution
+
+To resolve DID to the latest version of the DID document, DID resolver MUST:
+
+* 1. Fetch the blockchain transaction which transaction ID is the method specific identifier of DID, decoded from hexadecimal presentation to binary number and make it current.
+* 2. Fetch the transaction that spent UTXO 0 of the current transaction
+* 3. Check the transaction kind
+    * 3.1 If DID document transaction (see A.2.2 DID Document Transaction), check if current transaction’s UTXO 0 is unspent.
+        * 3.1.1.	If yes, return the DID document as the result of the resolution
+        * 3.1.2.	If no, make this transaction current and repeat from step 2
+    * 3.2.	If DID funding transaction (see A.2.4 DID Funding Transaction) make this transaction current and repeat from step 2
+    * 3.3.	If DID revocation transaction, return the last seen DID document as the result of the resolution and set deactivated property to true in DID document metadata and terminate.
+
+<br> 
+<br>
+
+If versionId query is present, the algorithm must modify steps 3.1 to read:
+* 3.1 If DID document transaction check if its transaction ID matches the value of versionId query.
+    * 3.1.1 If yes, return the DID document as the result of the resolution
+    * 3.1.2 If no, check if the UTXO of this transaction is spent
+        * 3.1.2.1 If no, set error property of DID resolution metadata to notFound and terminate
+        * 3.1.2.1 If yes, mark transaction as current and repeat the step 2
+<br> 
+<br>
+ 
+ And step 3.3 to read:
+ * 3.3 If DID revocation transaction, set error property of DID resolution metadata to notFound and terminate
+
+<br> 
+<br>
+
+---
+# 9.References and Reading Material
+
+
+
+ 
+ 
 
 
 
