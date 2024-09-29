@@ -138,6 +138,8 @@ Where fields are broken down as follows:
 
 ![Figure 1: DID UTXO Status)](https://github.com/user-attachments/assets/11048f33-069b-44aa-9615-fecaf6e11e3f)
 
+_Figure 1: DID UTXO Status_
+
 <br>
 
 ##### 3.2.2.1 The DID Document Data Model
@@ -188,6 +190,8 @@ The verifier can request DID status using a DID resolver. Verifiers can build an
 
 ![Figure 2: DID Creation](https://github.com/user-attachments/assets/a21c1751-94af-448d-abf3-4f7c6e64d5e9)
 
+_Figure 2: DID Creation_
+
 <br>
 
 ### 3.4 DID Operations 
@@ -220,9 +224,14 @@ The Subject has a single key.
 <br> 
 
 ![Figure 3: TX Anatomy](https://github.com/user-attachments/assets/19d37e3a-f249-4a01-806b-939ade99c7d1)
+
+_Figure 3: TX Anatomy_
+
 <br> 
 
 ![Figure 4: How the Subject and the Controller keys are link to the DID?](https://github.com/user-attachments/assets/ca6b2419-2232-4933-9dce-880b6353aa72)
+
+_Figure 4: How the Subject and the Controller keys are link to the DID?_
 
 <br>
 
@@ -245,7 +254,7 @@ Below we provide a detailed implementation of the BSV DID Method as a reference 
 
 ![Figure 5: Create DID](https://github.com/user-attachments/assets/f2059b35-4b8c-4f9c-92a0-2af73ac563b1)
 
-
+_Figure 5: Create DID_
 
 <br>
 
@@ -260,16 +269,18 @@ Below we provide a detailed implementation of the BSV DID Method as a reference 
     * Authentication method for the DID Controller (public key that can be verified on the signature input signing **Tx1**).
 
 
+<br> 
 
 ### 3.4.2 Resolve
 
 The resolver uses the DID (TxID) to find the transaction in the ledger and identify the linked transactions containing the DID Document. Once the DID Document Tx has been identified the resolver does a status check on the output of the Tx via the DID Resolver. Who will find the TxID given and track UTXO status until the last UTXO update is found. 
 The DID Resolver can be independently built and operated, implemented according to this specification, or provided by a third party that supports the UTXO-DID method. This method permits the use of different resolvers, ensuring the users are not required to rely on or trust our specific implementation. 
 
+<br> 
 
 ### 3.4.3 Update 
 
-#### A. DID Document Status Update
+#### A) DID Document Status Update
 
 In this section we explain how to change the content of the DID Document. The DID controller can change or update the status of the DID Document by creating a new transaction that spends the output of the latest transaction referring to the DID Document status. 
 
@@ -277,10 +288,12 @@ In this section we explain how to change the content of the DID Document. The DI
 
 ![Figure 6: Status Update](https://github.com/user-attachments/assets/617387e6-85f9-4b96-9ab2-e1bb994d5c5e)
 
+_Figure 6: Status Update_
+
 <br>
 
 
-#### B. Rotation of Keys
+#### B) Rotation of Keys
 
 Both subject and controller can initiate rotation of keys. How the rotation is performed depends on who is initiating and for what reason. Scheduled or voluntary rotations are different from rotations forced because keys have been compromised.
 
@@ -291,6 +304,8 @@ Both subject and controller can initiate rotation of keys. How the rotation is p
 * Controller rotation of valid or compromised M key <PKCD>
 * Controller rotation to update a valid <PKC0> key
 * Controller rotation upon <PKC0> key compromised
+
+<br> 
 
 **Subject Key Rotation**
 <br> There are many reasons a Subject key need to be rotated: either regular operating reasons like voluntary, scheduled rotation to comply with policies, security reason like a key being compromised or to keep a valid controller attestation because the controller key has been rotated.
@@ -303,71 +318,57 @@ Both subject and controller can initiate rotation of keys. How the rotation is p
 
 <br> 
 
-![Frame 4](https://github.com/user-attachments/assets/ab93d8e5-956e-42d4-a2c4-a83d7ef87f3f)
+![Figure 7: DID Key Rotation](https://github.com/user-attachments/assets/67902047-e25e-4a8d-b727-83d7b39c94bc)
+
+_Figure 7: DID Key Rotation_
 
 <br> 
 
-####### Subject Key Rotation
+**Controller Key Rotation**
+There are many reasons a Controller key needs to be rotated: either regular operating reasons like voluntary, scheduled rotation to comply with policies, security reason like any of the Controller keys: PKCD or PKC0 has been compromised. The Controller can lose any of the following keys. 
+* `PKCD`: Master Key which changes their own DID Authentication as well as all the issued DIDs.
+* `PKC0`: Public Key associated with their DID document, i.e. the Root key for all their DID Issuance.  
 
-There are many reasons a Subject key needs to be rotated: either regular operating reasons like voluntary, scheduled rotation to comply with policies, security reason like a key being compromised or to keep a valid controller attestation because the controller key has been rotated. 
+Only in the scenario in which the Controller losses his master key **PKCD’**, would require a different process for Key rotation. When changing **PKC0** the Controller will just be able to update the keys themselves.  
+<br> 
 
+**Compromised PKCD:** 
+The process begins with the DID Controller performing a Master Key update, during which the Controller updated its key to the new Master Public Key **PKCD’**. Subsequently, the controller generates a new DID for itself **TxID0’** , linking the previous public key to the new one, and then creates and publishes a new DID Document **TxID1’** spending **TxID0’** unique output. As a result of the controller keys being updated, the DID Document of all subjects that were co-signed by the Controller Key’s needs to be updated. In order to do so, the Controller will be required the DID Document controller keys of all subjects to be rotated. The DID Subject accepts the key rotation request. The DID Controller then generates a Key Rotation transaction, that the Subject must sign to spend the output of the **TxIDn** that contains the last status of the DID Document. See Figure 8. 
 
+<br> 
 
-Subject Key’s compromised: In case the subject’s key was compromised, it cannot be used to attest the rights, and the DID controller will have to establish some authentication process of the subject that does not refer to the compromised keys. Once the DID Subject is authenticated, the DID controller will discover that “PKS0” has been compromised and will sign a new issuance transaction using its PKC0 key. The output spent from the transaction referring to the latest DID Document transaction: TXn becomes the input of TXf (funding Tx). This transaction locked the new output to the controller’s unchanged public key and the subject’s new public key. 
+![Figure 8: DID Master Key Rotation](https://github.com/user-attachments/assets/c792bf3c-e53b-4a8a-b7ce-323bfb604586)
 
-Subject Key’s not compromised: In all other cases the authentication of the subject via an external channel is not necessary as the old key is considered secure and DID Subject will have to use both old and new keys to attesting that it is authorized to rotate the key as well as prove that it owns the new key. 
+_* Figure 8: Notification of key rotation of end-user is a user experience decision, configurable and not mandatory. Invalid signatures will be rejected by blockchain_
 
-
-
-
-
-####### Controller Key Rotation
-
-There are many reasons a Controller key needs to be rotated: either regular operating reasons like voluntary, scheduled rotation to comply with policies, security reason like any of the Controller keys: PKCD or PKC0 has been compromised. The Controller can lose any of the following keys. 
-
-<PKCD>: Master Key which changes their own DID Authentication as well as all the issued DIDs. 
-
-<PKC0>: Public Key associated with their DID document, i.e. the Root key for all their DID Issuance.  
-
-
-
-Only in the scenario in which the Controller losses his master key <PKCD’>, would require a different process for Key rotation. When changing <PKC0> the Controller will just be able to update the keys themselves.  
-
-
-
-Compromised PKCD: The process begins with the DID Controller performing a Master Key update, during which the Controller updated its key to the new Master Public Key <PKCD’>. Subsequently, the controller generates a new DID for itself <TxID0’> , linking the previous public key to the new one, and then creates and publishes a new DID Document <TxID1’> spending <TxID0’> unique output. 
-
-
-As a result of the controller keys being updated, the DID Document of all subjects that were co-signed by the Controller Key’s needs to be updated. In order to do so, the Controller will be required the DID Document controller keys of all subjects to be rotated. The DID Subject accepts the key rotation request. The DID Controller then generates a Key Rotation transaction, that the Subject must sign to spend the output of the TxIDn that contains the last status of the DID Document.
-
-
-
-
-
-
+<br> 
+<br>
 
 A new DID issuance and DID Document transaction is funded using a new Master Key. Afterwards, the Rotation Transaction is sent to the DID Subject for signing. Once signed, it is returned to the controller. The Rotation Transaction is then stored and broadcast on the blockchain. Following this, a new DID Document for the user is generated, incorporating a new derivation factor and updated keys. A Publish Transaction is created for the DID Subject, which is also signed and returned after signing. This Publish Transaction is then stored and broadcast on the blockchain. Finally, the updated DID Document is confirmed to have been successfully created and recorded on the blockchain.
 
+<br> 
+
+**Compromised PKC0.** 
+When a Controller needs to execute the rotation of their Controller Key associated with their DID document. (A specific example could be to change the Root key for all their DID Issuance). For this scenario the controller will have the same flow presented inside the “loop” of the above diagram, except, the Controller can perform the steps to create the Rotation Tx and publish it on chain by itself. They would still require the Subject to sign the updated DID Document. So will create a new linked Publish Tx to the Rotation Tx. See Figure 9. 
+
+<br> 
+
+![Figure 9: Tx Anatomy](https://github.com/user-attachments/assets/f198059d-de49-4fc6-b0a7-c097af2cb430)
+
+_Figure 9: Tx Anatomy_
+
+<br> 
+<br>
 
 
-Compromised PKC0. When a Controller needs to execute the rotation of their Controller Key associated with their DID document. (A specific example could be to change the Root key for all their DID Issuance). For this scenario the controller will have the same flow presented inside the “loop” of the above diagram, except, the Controller can perform the steps to create the Rotation Tx and publish it on chain by itself. They would still require the Subject to sign the updated DID Document. So will create a new linked Publish Tx to the Rotation Tx. See Figure 10  
-
-
-
-
-
-
-#### 3.4.4 Revoke 
+### 3.4.4 Revoke 
 
 In this section we explain how to revoke a DID. This method uses the spent status of the latest UTXO in the DID Document to indicate the active status of a DID. When the last transaction in the chain is spent, the DID is revoked. See section 3.4.2, DID and DID Document Status. A DID can be revoked by either the DID Subject or the DID Controller. Here are three ways the DID Subject can revoke its DID:
+* Subject is still in control of the private key and decides to revoke its DID, through the DID controller by calling the controller's DID revocation service. Bellow we provide an implementation example. *See Figure 10*
+* Subject is not in control of the private key (A specific example might be when the subject lost his/her device) and decides to revoke their DID.
+* Subject asks DID Controller to revoke on its behalf. Note that to secure subject request we advise Controllers to apply a mandatory, strong authentication of DID Subject before executing any changes. Bellow we provide an implementation example. This will be signified by the transaction type indicator, as described in section 3.4.1. *See figure 11*
 
-Subject is still in control of the private key and decides to revoke its DID, through the DID controller by calling the controller's DID revocation service. Bellow we provide an implementation example. See Figure 12
 
-Subject is not in control of the private key (A specific example might be when the subject lost his/her device) and decides to revoke their DID. 
-
-Subject asks DID Controller to revoke on its behalf. Note that to secure subject request we advise Controllers to apply a mandatory, strong authentication of DID Subject before executing any changes. Bellow we provide an implementation example. This will be signified by the transaction type indicator, as described in section 3.4.1. See figure 13
-
-In all cases the revocation is initiated by the DID Subject. 
 
 
 
