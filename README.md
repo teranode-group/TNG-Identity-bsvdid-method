@@ -18,7 +18,7 @@
 - LOW LATENCY DID RESOLUTION
 - DATA REGISTER ANALYSIS
 - PRIVACY CONSIDERATIONS
-    - UTXO DID Method Normative Reference
+- UTXO DID METHOD NORMATIVE REFERENCE
     - DID Syntax
     - Verifiable Data Registry
     - DID Operations
