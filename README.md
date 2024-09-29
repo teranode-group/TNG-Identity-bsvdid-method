@@ -380,7 +380,7 @@ _Figure 10: DID Revocation initiated by DID Subject_
 
 ![Figure 11: DID Revocation initiated by DID Controller](https://github.com/user-attachments/assets/34f940ec-d746-498b-9a3a-f45d195d747b)
 
-_Figure 11: DID Revocation initiated by DID Controller
+_Figure 11: DID Revocation initiated by DID Controller_
 
 <br> 
 <br>
@@ -399,7 +399,7 @@ The UTXO-Based DID Method supports a governance service where the DID Subject ac
 * In this case, the DID document will be self-attested. The controller will issue a DID to an alternate key-pair, which will then be used as the master keypair for attestation of DIDs to its audience. 
 * The trust framework supports a schema of key hierarchies and the issuance of the DID Controller. Once the Controller has been assigned a key, it becomes the master of that key for issuing all DIDs to its DID subjects.
 
-**DID <PKCD> = Master key and <PKC0>= Controller Key to sign Subject DIDs.** When the controller signs a new DID Document, the controller will publish the DID public key to enable the authentication of the Controller’s DID. For governance verification the verifier will use the DID to fetch the transaction on the ledger. Once they find the transaction the verifier will review the UTXO status and the DID Document. For governance verification, the verifier must ensure that the transaction that provided the TxID that became the DID issued for the Subject has been co-signed by one of the published Controller keys.
+**DID PKCD = Master key and PKC0= Controller Key to sign Subject DIDs.** When the controller signs a new DID Document, the controller will publish the DID public key to enable the authentication of the Controller’s DID. For governance verification the verifier will use the DID to fetch the transaction on the ledger. Once they find the transaction the verifier will review the UTXO status and the DID Document. For governance verification, the verifier must ensure that the transaction that provided the TxID that became the DID issued for the Subject has been co-signed by one of the published Controller keys.
 
 ---
 
@@ -407,31 +407,22 @@ The UTXO-Based DID Method supports a governance service where the DID Subject ac
 
 _THIS SECTION IS NOT NORMATIVE_
 
-As previously detailed (See Section 3), a DID and its associated DID Document are constructed through two linked transactions connected by the spending of a unique UTXO. For the DID to be resolved, it is necessary for both transactions to be mined within a block. The default outcome requires DID transactions to be mined in at least one block to be marked as resolved. Given the inherent nature of blockchain technology, the standard time for mining a block in Bitcoin SV, Bitcoin Core or Bitcoin Cash is approximately 10 minutes. 
-
+As previously detailed (See Section 3), a DID and its associated DID Document are constructed through two linked transactions connected by the spending of a unique UTXO
 Each blockchain transaction refers to a previous blockchain transaction. Given a **TxID** the ledger allows an observer trace back to the previous transaction. The DID method requires every DID status update to be linked to the initial transaction **TxID0**, and the DID controller requires verification of the UTXO status corresponding to the most recent transaction on the chain. Therefore, we are required to trace back though every transaction in the chain until we get to **TxID0**. To make this more efficient, our implementation uses an indexing service to enable forward Tx retrieval and DID status check. 
 
 
-
-##### Timing and Latency in DID Resolution Processes 
+### Timing and Latency in DID Resolution Processes 
 
 Currently, the DID resolver only searches for transactions in mined blocks. Given that the average time for a block to be mined is approximately 10 minutes, this forms the basis for the resolution time it takes for newly minted DIDs. Since broadcasted transactions are not subject to reorganization or modification in the mempool the mempool becomes the first trusted source of transaction status check. In addition, for this specific implementation and the blockchain network of used, which supports large blocks, allows most transactions in the mempool to be included in the following block, enhancing reliability in the mempool. The key innovation of this approach is that it accomplishes low resolution latency, but it shifts the responsibility of the stability of the DID Document from the DID Resolver to the requester of the status check. 
 
 
+### User-Controlled Security through Miner Block Validation
 
-##### User-Controlled Security through Miner Block Validation
-
-This approach shifts the responsibility for determining DID security and stability from the BSV DID method to the user. By using miner block validation, users can assess the security of a DID based on the number of block confirmations. This method provides low resolve latency while giving users the flexibility to determine stability based on the DID Resolution Metadata. The metadata includes information on the number of confirmations (i.e., the distance from the mempool in blocks) that a resolved DID document has received. The BSV DID method specifications will also offer clear guidelines on how different numbers of confirmations correspond to varying levels of stability and security guarantees: 
-
-BSV DID Method specification
-
-Resolution process: should specify that mempool will be searched too
-
-DID Resolution metadata: should document the new field defined in previous section
-
-Security section. should list recommendations on how number of confirmations maps to DID stability and DID Document stability
-
-
+This approach shifts the responsibility for determining DID security and stability from the BSV DID method to the user. By using miner block validation, users can assess the security of a DID based on the number of block confirmations. This method provides low resolve latency while giving users the flexibility to determine stability based on the DID Resolution Metadata. The metadata includes information on the number of confirmations (i.e., the distance from the mempool in blocks) that a resolved DID document has received. The BSV DID method specifications will also offer clear guidelines on how different numbers of confirmations correspond to varying levels of stability and security guarantees: !
+* BSV DID Method specification
+    * **Resolution process:** should specify that mempool will be searched too
+    * **DID Resolution metadata:** should document the new field defined in previous section
+    * **Security section:** should list recommendations on how number of confirmations maps to DID stability and DID Document stability
 
 
 
