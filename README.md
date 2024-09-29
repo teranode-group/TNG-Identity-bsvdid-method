@@ -214,13 +214,13 @@ The Subject has a single key.
 
 <br>
 
-**A_TxID0: Issuance Transaction.** 
+**A) TxID0: Issuance Transaction.** 
 <br> When a new DID is requested by the subject, the Controller will create an issuance transaction. This transaction locks the output to two public keys: the Controller's public key and the subject's public key. This initial transaction is necessary to initiate the DID Document process. is used in the DID string: __did:bsv:TxID0__ as the Subject’s DID. 
 **Tx0** has a single input and a single output. The DID Document is published via a subsequent transaction **Tx1** that spends the output of **Tx0**. See Figure 3. Note that when the Controller is required to issue a DID for itself, the Issuance transaction locks the output to both controller’s public keys (PKCD and PKC0). *[See Section 3.3. DID Controller](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#33-did-controller-and-did-resolver)* .  
 
 <br>
 
-**B_TxID1: DID Document transaction** 
+**B) TxID1: DID Document transaction** 
 <br> This is a subsequent transaction that spends the output of the issuance transaction **Tx0**. This transaction has a single input and a single output. This output contains a data payload with the DID Document.  **Tx1** output is locked to a one-of-two multi-sig script signed either by Subject public key or the Controller public key. Once the input of **Tx1** is signed by both keys, the transaction is broadcasted to the network. When validated by miners it will read as resolved by the DID Resolver. 
 
 <br> 
@@ -237,7 +237,7 @@ _Figure 4: How the Subject and the Controller keys are link to the DID?_
 
 <br>
 
-**C_Data payloads in the transaction outputs.** 
+**C) Data payloads in the transaction outputs.** 
 <br> After OP_RETURN we can find a data payload. This data does not affect the spending conditions, and it is described below: 
 - `BSV DID` Identifier specifying this is a transaction associated with the BSV DID Method. 
 - `Identity Code` DID Controller configuration identifier. 
@@ -246,7 +246,7 @@ _Figure 4: How the Subject and the Controller keys are link to the DID?_
 
 <br> 
 
-**D_Implementation Example**
+**D) Implementation Example**
 
 Below we provide a detailed implementation of the BSV DID Method as a reference example for DID issuance. This specification covers the process of requesting a DID from the subject to the DID controller. It includes two specific examples of the implementation:
 * **DID Controller Role:** The DID controller can be run by any entity. It is important to note that the BSV DID method does not require a centralized controller. Any organization or entity can run a DID controller and create a DID for itself, as specified in *[See Section 3.3. DID Controller](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#33-did-controller-and-did-resolver)*.
@@ -260,7 +260,7 @@ _Figure 5: Create DID_
 
 <br>
 
-#### Key Considerations
+**F) Key Considerations** 
 * **Proving Ownership:** The DID Subject demonstrates ownership of their private key by signing transaction **Tx1** and sending it to the DID Controller.
 * **Transaction Tx0:** The output of **Tx0** is locked by the public keys of both the DID Controller and the DID Subject.
 * **Transaction Tx1:** The input of **Tx1** requires signatures from both the Subject and the Controller. The output will contain the Controller-generated DID Document. This output is locked using a one-of-two multi-signature, allowing either the Controller or the Subject to spend the output.
@@ -309,7 +309,7 @@ Both subject and controller can initiate rotation of keys. How the rotation is p
 
 <br> 
 
-**Subject Key Rotation**
+**C) Subject Key Rotation**
 <br> There are many reasons a Subject key need to be rotated: either regular operating reasons like voluntary, scheduled rotation to comply with policies, security reason like a key being compromised or to keep a valid controller attestation because the controller key has been rotated.
 
 * **Subject Key’s compromised:** 
@@ -326,7 +326,7 @@ _Figure 7: DID Key Rotation_
 
 <br> 
 
-**Controller Key Rotation**
+**D) Controller Key Rotation**
 There are many reasons a Controller key needs to be rotated: either regular operating reasons like voluntary, scheduled rotation to comply with policies, security reason like any of the Controller keys: PKCD or PKC0 has been compromised. The Controller can lose any of the following keys. 
 * `PKCD`: Master Key which changes their own DID Authentication as well as all the issued DIDs.
 * `PKC0`: Public Key associated with their DID document, i.e. the Root key for all their DID Issuance.  
@@ -334,7 +334,7 @@ There are many reasons a Controller key needs to be rotated: either regular oper
 Only in the scenario in which the Controller losses his master key **PKCD’**, would require a different process for Key rotation. When changing **PKC0** the Controller will just be able to update the keys themselves.  
 <br> 
 
-**Compromised PKCD:** 
+**E) Compromised PKCD:** 
 
 The process begins with the DID Controller performing a Master Key update, during which the Controller updated its key to the new Master Public Key **PKCD’**. Subsequently, the controller generates a new DID for itself **TxID0’** , linking the previous public key to the new one, and then creates and publishes a new DID Document **TxID1’** spending **TxID0’** unique output. As a result of the controller keys being updated, the DID Document of all subjects that were co-signed by the Controller Key’s needs to be updated. In order to do so, the Controller will be required the DID Document controller keys of all subjects to be rotated. The DID Subject accepts the key rotation request. The DID Controller then generates a Key Rotation transaction, that the Subject must sign to spend the output of the **TxIDn** that contains the last status of the DID Document. *See Figure 8*. 
 
@@ -349,7 +349,7 @@ _* Figure 8: Notification of key rotation of end-user is a user experience decis
 <br> 
 <br> 
 
-**Compromised PKC0.** 
+**F) Compromised PKC0.** 
 
 When a Controller needs to execute the rotation of their Controller Key associated with their DID document. (A specific example could be to change the Root key for all their DID Issuance). For this scenario the controller will have the same flow presented inside the “loop” of the above diagram, except, the Controller can perform the steps to create the Rotation Tx and publish it on chain by itself. They would still require the Subject to sign the updated DID Document. So will create a new linked Publish Tx to the Rotation Tx. See Figure 9. 
 
@@ -404,6 +404,9 @@ The UTXO-Based DID Method supports a governance service where the DID Subject ac
 
 **DID PKCD = Master key and PKC0= Controller Key to sign Subject DIDs.** When the controller signs a new DID Document, the controller will publish the DID public key to enable the authentication of the Controller’s DID. For governance verification the verifier will use the DID to fetch the transaction on the ledger. Once they find the transaction the verifier will review the UTXO status and the DID Document. For governance verification, the verifier must ensure that the transaction that provided the TxID that became the DID issued for the Subject has been co-signed by one of the published Controller keys.
 
+<br> 
+<br> 
+
 ---
 
 ## 5.Low latency DID resolution
@@ -421,7 +424,7 @@ Currently, the DID resolver only searches for transactions in mined blocks. Give
 
 ### User-Controlled Security through Miner Block Validation
 
-This approach shifts the responsibility for determining DID security and stability from the BSV DID method to the user. By using miner block validation, users can assess the security of a DID based on the number of block confirmations. This method provides low resolve latency while giving users the flexibility to determine stability based on the DID Resolution Metadata. The metadata includes information on the number of confirmations (i.e., the distance from the mempool in blocks) that a resolved DID document has received. The BSV DID method specifications will also offer clear guidelines on how different numbers of confirmations correspond to varying levels of stability and security guarantees: !
+This approach shifts the responsibility for determining DID security and stability from the BSV DID method to the user. By using miner block validation, users can assess the security of a DID based on the number of block confirmations. This method provides low resolve latency while giving users the flexibility to determine stability based on the DID Resolution Metadata. The metadata includes information on the number of confirmations (i.e., the distance from the mempool in blocks) that a resolved DID document has received. The BSV DID method specifications will also offer clear guidelines on how different numbers of confirmations correspond to varying levels of stability and security guarantees:
 * BSV DID Method specification
     * **Resolution process:** should specify that mempool will be searched too
     * **DID Resolution metadata:** should document the new field defined in previous section
@@ -431,323 +434,82 @@ This approach shifts the responsibility for determining DID security and stabili
 
 The DID Spec Registries should define a new field for  where the resolver can signal the number of confirmations for the first DID transaction (Tx0) and the confirmations of the resolved (last by default) DID Document transaction.
 
+<br>
 
+| Confirmations.create    | DID Location    | Guidance of Use|
+|----------|--------------|-----------------------------|
+|0 | Mempool |	Still in the mempool; do not rely on it |
+| < 5 |	Blockchain	| Confirmed recently; handle with moderate care |
+| >= 5	| Blockchain |	Confirmed in several blocks; ready for normal use | 
 
+<br> 
+
+| Confirmations.update    | DID Documentat Location    | Guidance of Use|
+|----------|--------------|-----------------------------|
+|0 | Mempool |	Still in the mempool; do not rely on it |
+| < 5 |	Blockchain	|Confirmed recently; handle with moderate car |
+| >= 5	| Blockchain |	Confirmed in several blocks; ready for normal use | 
+
+<br> 
+
+```bash
 "confirmations": {
+- "create": 123,    // confirmations of the initial transaction for the resolved DID
+- "update": 234     // confirmations of the DID Document transaction for the resolved DID}
+```
+<br> 
+<br> 
 
-- "create": 123,    // confirmations of the initial transaction for the resolved DID
+For a newly created DID the number of confirmations is highly likely to be the same as both initial transactions are submitted to the bitcoin network together. The update field will signal the confirmations of the resolved DID Document, which by default is the last DID document in the chain, unless resolution of specific DID document version was requested by Version-ID.
 
-- "update": 234     // confirmations of the DID Document transaction for the resolved DID}
+The issuers and verifiers can configure number of valid blocks needed to accept a DID as resolved. It could be 0 confirmation requirement to **n** confirmations. 
 
-For a newly created DID the number of confirmations is highly likely to be the same as both initial transactions are submitted to the bitcoin network together. The update field will signal the confirmations of the resolved DID Document, which by default is the last DID document in the chain, unless resolution of specific DID document version was requested by Version-ID.
+<br> 
+<br> 
 
-
-
-The issuers and verifiers can configure number of valid blocks needed to accept a DID as resolved. It could be 0 confirmation requirement to <n> confirmations. 
+---
 
 ## 6. Data register analysis
 
+_THIS SECTION IS NOT NORMATIVE_
+
 This section outlines the technical reasons for choosing Bitcoin SV, including relevant cost and security considerations.
 
+### 6.1 Distributed Ledger Technology 
 
-
-#### 6.1 Distributed Ledger Technology 
-
-Between 2017 and 2018, three distinct blockchain protocols emerged from Bitcoin's original protocol, sharing a history that dates to the genesis block. These are BTC, BCH, and BSV (Bitcoin SV). The BSV blockchain ledger is a distributed platform that provides scalability, transparency, immutability, and efficient data consumption. Data can be published on the blockchain and retrieved within blockchain transactions.
-
-
+Between 2017 and 2018, three distinct blockchain protocols emerged from Bitcoin's original protocol, sharing a history that dates to the genesis block. These are BTC, BCH, and BSV (Bitcoin SV). The BSV Blockchain ledger is a distributed platform that provides scalability, transparency, immutability, and efficient data consumption. Data can be published on the blockchain and retrieved within blockchain transactions.
 
 Bitcoin SV typically produces blocks larger than 1GB, with the maximum recorded block size being 4 GB [3], and it supports a high transaction throughput of up to 5,100 blockchain transactions per second (tps) [4]. It accommodates large transaction sizes, with a record of a 42MB transaction [3] and has a default maximum script size of 500kB [3]. It also includes a complete set of opcodes and supports big integer arithmetic in-script [3]. Previously, we presented a solution based on the Bitcoin SV protocol for blockchain transactions, which can be easily adapted to any UTXO-based blockchain. illustrates a simplified schematic of a Bitcoin transaction. This transaction fee is the lowest among Proof of Work (PoW) blockchains [3].
 
- 
+<br> 
+<br> 
 
 #### 6.2 Why not others? Ledger Comparison Analysis 
 
 Given the project's requirements, a Proof of Work (PoW), public, and permissionless blockchain was deemed necessary. PoW blockchains record cumulative PoW directly on the blockchain, making the data structure statistically resistant to attacks or modifications. BTC was excluded due to high transaction fees and a limited block size. Apart from Bitcoin SV, the remaining options were:
 
-BCH: A UTXO- PoW ledger with a maximum block size of 32MB. Although BCH has a higher transactions per second (TPS) rate than BTC, its transaction processing remains limited and while transaction fees are lower in average than BTC, they are still relatively high for the needs of this project. 
-
-Ethereum (ETH): Previously a PoW ledger, now using Proof of Stake (PoS) as its consensus mechanism. All statements and data refer to ETH before this change. ETH is an account-based PoW ledger with an integrated smart contract layer that maintains a global state, posing scalability challenges [3]. The new adopted consensus mechanism allows ETH to process block faster than BTC and BCH and BSV. The transaction structure of an Ethereum will request, most likely to utilise a token protocol to store and monitor the DID Document. ERC-20, their most adopted token protocol overage transaction fee remains considerable large for the purpose of this project and as the complexity of the smart contract increases, so does the gas fee. ETH has the highest average transaction fees among blockchains.
-
-Private ledgers, such as Hyperledger, were not considered since solutions built on these ledgers incur higher costs for implementation, maintenance, transaction fees and conventionally single authorities running the infrastructure.
-
+* **BCH:** A UTXO- PoW ledger with a maximum block size of 32MB. Although BCH has a higher transactions per second (TPS) rate than BTC, its transaction processing remains limited and while transaction fees are lower in average than BTC, they are still relatively high for the needs of this project. 
+* **Ethereum (ETH):** Previously a PoW ledger, now using Proof of Stake (PoS) as its consensus mechanism. All statements and data refer to ETH before this change. ETH is an account-based PoW ledger with an integrated smart contract layer that maintains a global state, posing scalability challenges [3]. The new adopted consensus mechanism allows ETH to process block faster than BTC and BCH and BSV. The transaction structure of an Ethereum will request, most likely to utilise a token protocol to store and monitor the DID Document. ERC-20, their most adopted token protocol overage transaction fee remains considerable large for the purpose of this project and as the complexity of the smart contract increases, so does the gas fee. ETH has the highest average transaction fees among blockchains.
+* **Private ledgers,** such as Hyperledger, were not considered since solutions built on these ledgers incur higher costs for implementation, maintenance, transaction fees and conventionally single authorities running the infrastructure
 
 Our solution requires high-volume transaction processing at low cost, as well as maintaining data integrity over time and across parties involved. Immutability and alteration records should be enforced by an independent process: the consensus mechanism. Additionally, it does not require the execution of any programmatic function at the miner level, avoiding execution costs in transaction fees. Lastly in BSV there’s the 'first-seen rule' which means that miners will not accept a double-spend before block publication even for a higher fee if a miner receives a transaction, they verify it is correct, then accept it as valid. This means they will not accept a double-spend of the same input. Then add the transaction in the mempool. It may appear in the next block, or the block after. For these reasons, we decided to implement the solution using Bitcoin SV, benefiting from its scalability, low cost, and data integrity provided by PoW.
 
+<br> 
+<br> 
 
+---
 
 ## 7. Privacy Considerations
 
-One of the main features of this DID method is to enhance the revocation process to be immediate for the verifier, the issuer and the subject. The verification process is independent of the issuer and does not necessarily require a trusted service provider. This means that no single entity can track the holder’s usage of their credentials. The request of the status check on a specific credential is intentionally made without providing context to the blockchain network (blockchain nodes) and completely independently from the Issuer.  Even when a single blockchain node is queried, the node would not be able to link the query to a credential or to a credential holder. This enhanced in privacy would not be possible with traditional approaches.  
+_THIS SECTION IS NOT NORMATIVE_
 
+One of the main features of this DID method is to enhance immediate revocation. The verification process is independent of the issuer and does not necessarily require a trusted service provider. This means that no single entity can track the holder’s usage of their credentials. The request of the status check on a specific credential is intentionally made without providing context to the blockchain network (blockchain nodes) and completely independently from the Issuer.  Even when a single blockchain node is queried, the node would not be able to link the query to a credential or to a credential holder. This enhanced in privacy would not be possible with traditional approaches. 
 
+<br> 
+<br> 
 
+---
 
+# 8. UTXO DID Method Normative Reference
 
-
-## 
-
-## 
-
-
-
-### 
-
-
-
-
-
-
-
-
-
-#### 
-
-### 
-
-SHOULD
-
-
-
-
-
-
-
-design
-
-
-
-Below text uses the following symbols that refer to SECP256K1 private and public keys:
-
-It also uses term identityCode. This is a code that identifies the DID controller that created by transactions. This code MUST be present and it SHOULD be unique.
-
-
-
-####  
-
-funding issuance rtwo next s
-
-The OTXO of DID issuance transaction MUST provide funds to cover mining fees for two next transactions.
-
-The locking script of DID issuance transaction MUST require signatures by both DID controller and DID subject to spend it.
-
-The first segment of the OP_RETURN data payload MUST be set to the string literal BSVDID.
-
-The second segment of the OP_RETURN payload MUST be set to identityCode.
-
-The third segment of the OP_RETURN data payload MUST be set to string literal 1 (numerical digit 1).
-
-
-
-
-
-
-
-#### 
-
-The DID document transaction is funded either by the DID issuance transaction or DID funding transaction. It carries DID document in the third segment of OP_RETURN payload. The transaction has one input which MUST spend the UTXO provided by either DID issuance or DID funding transaction.
-
-
-
-The OTXO of DID document transaction MUST provide funds to cover mining fee for the next transaction.
-
-The locking script of DID document transaction MUST require signature by either DID controller or DID subject to spend it.
-
-The first segment of the OP_RETURN data payload MUST be set to the string literal BSVDID.
-
-The second segment of the OP_RETURN payload MUST be set to identityCode.
-
-The third segment of the OP_RETURN data payload MUST be set to the JSON string representing DID document.
-
-
-
-
-
-
-
-The transaction ID (TxID) of the DID document transaction is the versionId of the DID document and resolvable as such.
-
-The timestamp of the  block that contains the DID document transaction is the versionTime of the DID document and resolvable as such.
-
-
-
-#### 
-
-The DID revocation is funded by the preceding DID document transaction. The transaction has one input which MUST spend the UTXO of the preceding DID document transaction. The transaction MUST one output with value 0, which makes it unspendable. The DID revocation transaction, when present, is thus the last transaction in the DID chain and invalidates the DID.
-
-
-
-The OTXO of DID revocation transaction MUST have value 0 and SHOULD have no other locking script but OP_RETURN.
-
-The first segment of the OP_RETURN data payload must be set to the string literal BSVDID.
-
-The second segment of the OP_RETURN payload MUST be set to identityCode.
-
-The third segment of the OP_RETURN data payload MUST be set to string literal 3 (numerical digit 3).
-
-
-
-
-
-
-
-
-
-#### 
-
-The DID funding transaction does not affect the DID state and is used only to bring in additional funds needed to extend the DID transaction chain. IT has two inputs and one output. The first input MUST spend the out-of-band UTXO provided by the creator of this transaction. This UTXO MUST provide enough funds to cover mining fee for two transactions. The second input MUST spend the UTXO of the preceding DID document transaction, which provides funds to cover mining fee for one transaction.
-
-
-
-The OTXO of DID funding transaction MUST provide funds to cover mining fee for two next transactions.
-
-The locking script of DID funding transaction MUST require signature by both DID controller and DID subject to spend it.
-
-The first segment of the OP_RETURN data payload MUST be set to the string literal BSVDID.
-
-The second segment of the OP_RETURN payload MUST be set to identityCode.
-
-The third segment of the OP_RETURN data payload MUST be set to string literal 2 (numerical digit 2).
-
-
-
-
-
-
-
-#### 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-### A.3 DID Operations
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#### A.3.1 DID Creation
-
-To create DID, DID controller MUST publish two transactions to the blockchain:
-
-DID issuance transaction (see ), and
-
-DID Document transaction (see ) containing the first version of the DID document)
-
-It is the DID controller’s responsibility to provide funding to cover mining fees for those transactions.
-
-When the DID subject is acting as own controller (SSI) it MUST own and use, C0/PKC0 representing DID controller and S0/PKS0 representing DID subject.
-
-
-
-#### A.3.2 DID Document Updates
-
-To create a new version of DID document, DID controller must publish two transactions to the blockchain:
-
-DID funding transaction (see ) which provides funds to cover mining fees of this and a new DID document transaction.
-
-DID Document transaction (see ) which publishes new version of DID document
-
-It is the DID controller’s responsibility to provide funding for DID funding transaction.
-
-While the DID funding transaction can be signed by either DID subject or DID controller, the DID document transaction itself must be signed by both. This ensures that both DID subject and DID controller agree on the new DID document contents.
-
-
-
-#### A.3.3 DID Deactivation
-
-To deactivate, or revoke a DID, either DID subject or DID controller MUST publish DID revocation transaction (see ). The funds for this transaction are already available in the UTXO of the last transaction of the DID’s transaction chain.
-
-
-
-#### 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## 
-
-
-
-
-
-
-
+## 8.1 DID Syntax 
