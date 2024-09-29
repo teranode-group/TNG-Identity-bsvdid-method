@@ -73,8 +73,7 @@ Please review terminology here.
 ---
 
 ## 3. Specification Overview
-_This section is not normative_
-
+_THIS SECTION IS NOT NORMATIVE_
 <br>
 
 ### 3.1 Prerequisites 
@@ -252,7 +251,7 @@ Below we provide a detailed implementation of the BSV DID Method as a reference 
 
 <br>
 
-![Figure 5: Create DID](https://github.com/user-attachments/assets/f2059b35-4b8c-4f9c-92a0-2af73ac563b1)
+![Frame 5: Create DID](https://github.com/user-attachments/assets/53cdaec0-f189-40ae-ad77-e6a64d44478f)
 
 _Figure 5: Create DID_
 
@@ -333,7 +332,10 @@ Only in the scenario in which the Controller losses his master key **PKCD’**, 
 <br> 
 
 **Compromised PKCD:** 
-The process begins with the DID Controller performing a Master Key update, during which the Controller updated its key to the new Master Public Key **PKCD’**. Subsequently, the controller generates a new DID for itself **TxID0’** , linking the previous public key to the new one, and then creates and publishes a new DID Document **TxID1’** spending **TxID0’** unique output. As a result of the controller keys being updated, the DID Document of all subjects that were co-signed by the Controller Key’s needs to be updated. In order to do so, the Controller will be required the DID Document controller keys of all subjects to be rotated. The DID Subject accepts the key rotation request. The DID Controller then generates a Key Rotation transaction, that the Subject must sign to spend the output of the **TxIDn** that contains the last status of the DID Document. See Figure 8. 
+
+The process begins with the DID Controller performing a Master Key update, during which the Controller updated its key to the new Master Public Key **PKCD’**. Subsequently, the controller generates a new DID for itself **TxID0’** , linking the previous public key to the new one, and then creates and publishes a new DID Document **TxID1’** spending **TxID0’** unique output. As a result of the controller keys being updated, the DID Document of all subjects that were co-signed by the Controller Key’s needs to be updated. In order to do so, the Controller will be required the DID Document controller keys of all subjects to be rotated. The DID Subject accepts the key rotation request. The DID Controller then generates a Key Rotation transaction, that the Subject must sign to spend the output of the **TxIDn** that contains the last status of the DID Document. *See Figure 8*. 
+
+A new DID issuance and DID Document transaction is funded using a new Master Key. Afterwards, the Rotation Transaction is sent to the DID Subject for signing. Once signed, it is returned to the controller. The Rotation Transaction is then stored and broadcast on the blockchain. Following this, a new DID Document for the user is generated, incorporating a new derivation factor and updated keys. A Publish Transaction is created for the DID Subject, which is also signed and returned after signing. This Publish Transaction is then stored and broadcast on the blockchain. Finally, the updated DID Document is confirmed to have been successfully created and recorded on the blockchain.
 
 <br> 
 
@@ -342,13 +344,10 @@ The process begins with the DID Controller performing a Master Key update, durin
 _* Figure 8: Notification of key rotation of end-user is a user experience decision, configurable and not mandatory. Invalid signatures will be rejected by blockchain_
 
 <br> 
-<br>
-
-A new DID issuance and DID Document transaction is funded using a new Master Key. Afterwards, the Rotation Transaction is sent to the DID Subject for signing. Once signed, it is returned to the controller. The Rotation Transaction is then stored and broadcast on the blockchain. Following this, a new DID Document for the user is generated, incorporating a new derivation factor and updated keys. A Publish Transaction is created for the DID Subject, which is also signed and returned after signing. This Publish Transaction is then stored and broadcast on the blockchain. Finally, the updated DID Document is confirmed to have been successfully created and recorded on the blockchain.
-
 <br> 
 
 **Compromised PKC0.** 
+
 When a Controller needs to execute the rotation of their Controller Key associated with their DID document. (A specific example could be to change the Root key for all their DID Issuance). For this scenario the controller will have the same flow presented inside the “loop” of the above diagram, except, the Controller can perform the steps to create the Rotation Tx and publish it on chain by itself. They would still require the Subject to sign the updated DID Document. So will create a new linked Publish Tx to the Rotation Tx. See Figure 9. 
 
 <br> 
@@ -364,48 +363,53 @@ _Figure 9: Tx Anatomy_
 ### 3.4.4 Revoke 
 
 In this section we explain how to revoke a DID. This method uses the spent status of the latest UTXO in the DID Document to indicate the active status of a DID. When the last transaction in the chain is spent, the DID is revoked. See section 3.4.2, DID and DID Document Status. A DID can be revoked by either the DID Subject or the DID Controller. Here are three ways the DID Subject can revoke its DID:
-* Subject is still in control of the private key and decides to revoke its DID, through the DID controller by calling the controller's DID revocation service. Bellow we provide an implementation example. *See Figure 10*
-* Subject is not in control of the private key (A specific example might be when the subject lost his/her device) and decides to revoke their DID.
-* Subject asks DID Controller to revoke on its behalf. Note that to secure subject request we advise Controllers to apply a mandatory, strong authentication of DID Subject before executing any changes. Bellow we provide an implementation example. This will be signified by the transaction type indicator, as described in section 3.4.1. *See figure 11*
+* **Subject is still in control of the private key and decides to revoke its DID,** through the DID controller by calling the controller's DID revocation service. Bellow we provide an implementation example. *See Figure 10*
+* **Subject is not in control of the private key** (A specific example might be when the subject lost his/her device) and decides to revoke their DID.
+* **Subject asks DID Controller to revoke on its behalf.** Note that to secure subject request we advise Controllers to apply a mandatory, strong authentication of DID Subject before executing any changes. Bellow we provide an implementation example. This will be signified by the transaction type indicator, as described in [section 3.4.1.](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#341-create) *See figure 11*
 
+In all cases the revocation is initiated by the DID Subject. 
 
+<br> 
 
+![Figure 10: DID Revocation initiated by DID Subject](https://github.com/user-attachments/assets/937fac6e-6282-4cbd-b4ba-021d81cebe27)
 
+_Figure 10: DID Revocation initiated by DID Subject_
 
+<br> 
+<br>
 
+![Figure 11: DID Revocation initiated by DID Controller](https://github.com/user-attachments/assets/34f940ec-d746-498b-9a3a-f45d195d747b)
 
+_Figure 11: DID Revocation initiated by DID Controller
 
+<br> 
+<br>
+
+---
 
 ## 4. Governance model using DID BSV method. 
 
-The UTXO-Based DID Method supports a governance service where the DID Subject accepts a DID from a trusted Controller as valid. The Verifier will only accept as valid a DID Subject whose DID Document is co-signed by that specific controller. As mentioned before, the DID controller can be run by any entity. The BSV DID method does not require a centralized controller. 
-Below there’s a description of a specific example for governance: 
+_THIS SECTION IS NOT NORMATIVE_
 
-Imagine a scenario where the DID Controller is run by the Spanish Directorate-General for Traffic (DGT). 
+The UTXO-Based DID Method supports a governance service where the DID Subject accepts a DID from a trusted Controller as valid. The Verifier will only accept as valid a DID Subject whose DID Document is co-signed by that specific controller. As mentioned before, the DID controller can be run by any entity. The BSV DID method does not require a centralized controller. Below there’s a description of a specific example for governance: 
 
-Every DID issued by the DGT is always co-signed by this controller. The verifier that checks the validity of the DGT operator's DID ensures it is always co-signed by the DGT controller. 
+* Imagine a scenario where the DID Controller is run by the Spanish Directorate-General for Traffic (DGT). 
+* Every DID issued by the DGT is always co-signed by this controller. The verifier that checks the validity of the DGT operator's DID ensures it is always co-signed by the DGT controller. 
+* The DID controller establishes an ecosystem where value is derived from attestation to the keys of a DID subject and the signature of the controller. Initially, the controller will issue a DID for itself following the process described in the UTXO DID method. See section 3.4.1. 
+* In this case, the DID document will be self-attested. The controller will issue a DID to an alternate key-pair, which will then be used as the master keypair for attestation of DIDs to its audience. 
+* The trust framework supports a schema of key hierarchies and the issuance of the DID Controller. Once the Controller has been assigned a key, it becomes the master of that key for issuing all DIDs to its DID subjects.
 
-The DID controller establishes an ecosystem where value is derived from attestation to the keys of a DID subject and the signature of the controller. Initially, the controller will issue a DID for itself following the process described in the UTXO DID method. See section 3.4.1. 
+**DID <PKCD> = Master key and <PKC0>= Controller Key to sign Subject DIDs.** When the controller signs a new DID Document, the controller will publish the DID public key to enable the authentication of the Controller’s DID. For governance verification the verifier will use the DID to fetch the transaction on the ledger. Once they find the transaction the verifier will review the UTXO status and the DID Document. For governance verification, the verifier must ensure that the transaction that provided the TxID that became the DID issued for the Subject has been co-signed by one of the published Controller keys.
 
-In this case, the DID document will be self-attested. The controller will issue a DID to an alternate key-pair, which will then be used as the master keypair for attestation of DIDs to its audience. 
-
-The trust framework supports a schema of key hierarchies and the issuance of the DID Controller. Once the Controller has been assigned a key, it becomes the master of that key for issuing all DIDs to its DID subjects.
-
-
-
-DID <PKCD> = Master key and <PKC0>= Controller Key to sign Subject DIDs. When the controller signs a new DID Document, the controller will publish the DID public key to enable the authentication of the Controller’s DID. 
-
-
-For governance verification the verifier will use the DID to fetch the transaction on the ledger. Once they find the transaction the verifier will review the UTXO status and the DID Document. For governance check the verifier has to check the DID issued by for the Subject has been co-signed by one of the published Controller keys. 
-
-
-
+---
 
 ## 5.Low latency DID resolution
 
+_THIS SECTION IS NOT NORMATIVE_
+
 As previously detailed (See Section 3), a DID and its associated DID Document are constructed through two linked transactions connected by the spending of a unique UTXO. For the DID to be resolved, it is necessary for both transactions to be mined within a block. The default outcome requires DID transactions to be mined in at least one block to be marked as resolved. Given the inherent nature of blockchain technology, the standard time for mining a block in Bitcoin SV, Bitcoin Core or Bitcoin Cash is approximately 10 minutes. 
 
-Each blockchain transaction refers to a previous blockchain transaction. Given a TxID the ledger allows an observer trace back to the previous transaction. The DID method requires every DID status update to be linked to the initial transaction TXID0, and the DID controller requires verification of the UTXO status corresponding to the most recent transaction on the chain. Therefore, we are required to trace back though every transaction in the chain until we get to TXID0. To make this more efficient, our implementation uses an indexing service to enable forward Tx retrieval and DID status check. 
+Each blockchain transaction refers to a previous blockchain transaction. Given a **TxID** the ledger allows an observer trace back to the previous transaction. The DID method requires every DID status update to be linked to the initial transaction **TxID0**, and the DID controller requires verification of the UTXO status corresponding to the most recent transaction on the chain. Therefore, we are required to trace back though every transaction in the chain until we get to **TxID0**. To make this more efficient, our implementation uses an indexing service to enable forward Tx retrieval and DID status check. 
 
 
 
