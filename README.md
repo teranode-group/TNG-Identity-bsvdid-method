@@ -167,7 +167,7 @@ The DID Document is published via a subsequent transaction **Tx1** that spends t
 
 ![Figure 1_DID UTXO Status](https://github.com/user-attachments/assets/0cfebe93-f4ae-4432-967a-98441c25c0c8)
 
-_Figure 1: DID UTXO Status_
+> _Figure 1: DID UTXO Status_
 
 <br>
 <br>
@@ -221,7 +221,7 @@ The verifier can request DID status using a DID resolver. Verifiers can build an
 
 ![Figure 2_DID Creation](https://github.com/user-attachments/assets/5e8807a4-3a7d-47bf-9058-761e2dde8ac3)
 
-_Figure 2: DID Creation_
+> _Figure 2: DID Creation_
 
 <br>
 
@@ -256,13 +256,13 @@ The Subject has a single key.
 
 ![Figure 3_TX Anatomy](https://github.com/user-attachments/assets/b00ac2d0-3a3d-4b06-aac6-f9a529477d0a)
 
-_Figure 3: TX Anatomy_
+> _Figure 3: TX Anatomy_
 
 <br> 
 
 ![Figure 4_How the Subject and the Controller keys are link to the DID?](https://github.com/user-attachments/assets/87860062-7088-4c55-a0c4-78160d22a381)
 
-_Figure 4: How the Subject and the Controller keys are link to the DID?_
+> _Figure 4: How the Subject and the Controller keys are link to the DID?_
 
 <br>
 
@@ -283,9 +283,9 @@ Below we provide a detailed implementation of the BSV DID Method as a reference 
 
 <br>
 
-![Frame 5: Create DID](https://github.com/user-attachments/assets/53cdaec0-f189-40ae-ad77-e6a64d44478f)
+![Frame 5_Create DID](https://github.com/user-attachments/assets/91b735a3-b412-4582-9ed5-68210617d430)
 
-_Figure 5: Create DID_
+> _Figure 5: Create DID_
 
 <br>
 
