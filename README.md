@@ -254,13 +254,13 @@ The Subject has a single key.
 
 <br> 
 
-![Figure 3_TX Anatomy](https://github.com/user-attachments/assets/399ade3c-7257-4887-b2c4-f0c592a1d1f0)
+![Figure 3_TX Anatomy](https://github.com/user-attachments/assets/b00ac2d0-3a3d-4b06-aac6-f9a529477d0a)
 
 _Figure 3: TX Anatomy_
 
 <br> 
 
-![Figure 4: How the Subject and the Controller keys are link to the DID?](https://github.com/user-attachments/assets/ca6b2419-2232-4933-9dce-880b6353aa72)
+![Figure 4_How the Subject and the Controller keys are link to the DID?](https://github.com/user-attachments/assets/87860062-7088-4c55-a0c4-78160d22a381)
 
 _Figure 4: How the Subject and the Controller keys are link to the DID?_
 
