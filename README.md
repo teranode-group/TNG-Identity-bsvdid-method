@@ -2,27 +2,50 @@
 
 ## Contents
 
-- ABSTRACT
-- INTRODUCTION
-    - Purpose
-    - Intended audience
-    - Scope
-    - Compliance
-    - Terminology
-- SPECIFICATION OVERVIEW
-    - Prerequisites
-    - UTXO DID Method
-    - DID Controller and DID Resolver
-    - DID Operations
-- GOVERNANCE MODEL USING DID BSV METHOD
-- LOW LATENCY DID RESOLUTION
-- DATA REGISTER ANALYSIS
-- PRIVACY CONSIDERATIONS
-- UTXO DID METHOD NORMATIVE REFERENCE
-    - DID Syntax
-    - Verifiable Data Registry
-    - DID Operations
-- REFERENCES AND READING MATERIAL
+- [ABSTRACT](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#1-abstract)
+- [INTRODUCTION](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#2-introduction)
+    - [Purpose](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#21-purpose)
+    - [Intended audience](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#22-intended-audience)
+    - [Scope](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#23-scope)
+    - [Compliance](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#24-compliance)
+    - [Terminology](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#25-terminology)
+- [SPECIFICATION OVERVIEW](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#3-specification-overview)
+    - [Prerequisites](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#31-prerequisites)
+    - [UTXO DID Method](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#32-utxo-did-method)
+        - [The DID](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#33-did-controller-and-did-resolver)
+        - [DID Document](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#322-the-did-document)
+        - [DID Document Data Model](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#3221-the-did-document-data-model)     
+    - [DID Controller and DID Resolver](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#33-did-controller-and-did-resolver)
+        - [DID Controller](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#331-did-controller)
+        - [DID Resolver](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#332-did-resolver) 
+    - [DID Operations](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#34-did-operations)
+        - [Create](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#341-create)
+        - [Resolve](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#342-resolve)
+        - [Update](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#343-update)
+        - [Revoke](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#344-revoke)
+        -[DID Document Data Modal](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#3221-the-did-document-data-model) 
+- [GOVERNANCE MODEL USING DID BSV METHOD](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#4-governance-model-using-did-bsv-method)
+- [LOW LATENCY DID RESOLUTION](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#4-governance-model-using-did-bsv-method)
+    - [Timing and Latency in DID Resolution Processes](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#timing-and-latency-in-did-resolution-processes)
+    - [User-Controlled Security through Miner Block Validation](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#user-controlled-security-through-miner-block-validation)
+- [DATA REGISTER ANALYSIS](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#6-data-register-analysis)
+    - [Distributed Ledger Technology](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#61-distributed-ledger-technology)
+    - [Why not others? Ledger Comparison Analysis](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#62-why-not-others-ledger-comparison-analysis)
+- [PRIVACY CONSIDERATIONS](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#7-privacy-considerations)
+- [UTXO DID METHOD NORMATIVE REFERENCE](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#8-utxo-did-method-normative-reference)
+    - [DID Syntax](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#81-did-syntax)
+    - [Verifiable Data Registry](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#82-verifiable-data-registry)
+        - [DID Issuance Transaction](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#821-did-issuance-transaction)
+        - [DID Document Transaction](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#822-did-document-transaction)
+        - [DID Revocation Transaction](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#823-did-revocation-transaction)
+        - [DID Funding Transaction](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#824-did-funding-transaction)
+        - [Example of DID Transaction Chain](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#825-example-of-did-transaction-chain)
+    - [DID Operations](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#83-did-operations)
+        - [DID Creation](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#831-did-creation)
+        - [DID Document Update](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#832-did-document-updates)
+        - [DID Deactivation](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#833-did-deactivation)
+        - [DID Resolution](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#834-did-resolution)
+- [REFERENCES AND READING MATERIAL](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#834-did-resolution)
 
 ---
 # Main Title
