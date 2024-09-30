@@ -30,6 +30,9 @@
 ## 1. Abstract
 This document outlines a method for the issuance, status updates, key rotation, and revocation of Decentralized Identifiers (DIDs) using a public, UTXO-based blockchain as a data registry. In this approach, DIDs are issued and managed through transactions recorded on the blockchain, leveraging its transparency and immutability. The blockchain allows a UTXO to be spent only once, which provides a double spend protection, resulting in a final spent state that is permanent and verified by the network. This characteristic makes the UTXO model ideal for reflecting the status of a DID, such as revocation, which, is irreversible once executed. DIDs can also be updated by linking a transaction chain to the DID Document, with a new version controlled solely by the DID Controller. Our approach supports both issuer-initiated and user-initiated status updates and revocation requests, ensuring secure and verifiable DID management within a distributed ecosystem. This document describes key rotation methods for DID recovery. We described a proposal to accomplish low latency for DID resolution and a governance mechanism to guide the implementation and deployment of DIDs, emphasizing the critical role of the blockchain in maintaining a reliable and transparent data registry. 
 
+<br>
+<br>
+
 ---
 
 ## 2. Introduction
@@ -69,6 +72,9 @@ Our implementation of the DID method can appropriately handle and enforce the is
 ### 2.5 Terminology
 
 Please review terminology here. 
+
+<br>
+<br>
 
 ---
 
@@ -136,7 +142,7 @@ Where fields are broken down as follows:
 
 The DID Document is published via a subsequent transaction **Tx1** that spends the output of **Tx0**. The relationship between the DID, the DID document, and the blockchain transactions is given in Figure 1.  The transaction **Tx1** contains a single input and a single output. The output contains the locking script, the DID Document and the funds covering the mining fee of the next transaction. **Tx1** spending the output of **Tx0** allows an external observer to conclude that there is a link between both blockchain transactions. The status of **Tx1** output indicates the latest status of the DID Document. 
 
-![Figure 1: DID UTXO Status)](https://github.com/user-attachments/assets/11048f33-069b-44aa-9615-fecaf6e11e3f)
+![Figure 1_DID UTXO Status](https://github.com/user-attachments/assets/0cfebe93-f4ae-4432-967a-98441c25c0c8)
 
 _Figure 1: DID UTXO Status_
 
@@ -190,7 +196,7 @@ The verifier can request DID status using a DID resolver. Verifiers can build an
 
 <br> 
 
-![Figure 2: DID Creation](https://github.com/user-attachments/assets/a21c1751-94af-448d-abf3-4f7c6e64d5e9)
+![Figure 2_DID Creation](https://github.com/user-attachments/assets/5e8807a4-3a7d-47bf-9058-761e2dde8ac3)
 
 _Figure 2: DID Creation_
 
