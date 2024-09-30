@@ -23,7 +23,7 @@
         - [Resolve](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#342-resolve)
         - [Update](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#343-update)
         - [Revoke](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#344-revoke)
-        -[DID Document Data Modal](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#3221-the-did-document-data-model) 
+        - [DID Document Data Modal](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#3221-the-did-document-data-model) 
 - [GOVERNANCE MODEL USING DID BSV METHOD](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#4-governance-model-using-did-bsv-method)
 - [LOW LATENCY DID RESOLUTION](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#4-governance-model-using-did-bsv-method)
     - [Timing and Latency in DID Resolution Processes](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#timing-and-latency-in-did-resolution-processes)
@@ -254,7 +254,7 @@ The Subject has a single key.
 
 <br> 
 
-![Figure 3: TX Anatomy](https://github.com/user-attachments/assets/19d37e3a-f249-4a01-806b-939ade99c7d1)
+![Figure 3_TX Anatomy](https://github.com/user-attachments/assets/399ade3c-7257-4887-b2c4-f0c592a1d1f0)
 
 _Figure 3: TX Anatomy_
 
