@@ -482,9 +482,8 @@ Between 2017 and 2018, three distinct blockchain protocols emerged from Bitcoin'
 Bitcoin SV typically produces blocks larger than 1GB, with the maximum recorded block size being 4 GB [3], and it supports a high transaction throughput of up to 5,100 blockchain transactions per second (tps) [4]. It accommodates large transaction sizes, with a record of a 42MB transaction [3] and has a default maximum script size of 500kB [3]. It also includes a complete set of opcodes and supports big integer arithmetic in-script [3]. Previously, we presented a solution based on the Bitcoin SV protocol for blockchain transactions, which can be easily adapted to any UTXO-based blockchain. illustrates a simplified schematic of a Bitcoin transaction. This transaction fee is the lowest among Proof of Work (PoW) blockchains [3].
 
 <br> 
-<br> 
 
-#### 6.2 Why not others? Ledger Comparison Analysis 
+### 6.2 Why not others? Ledger Comparison Analysis 
 
 Given the project's requirements, a Proof of Work (PoW), public, and permissionless blockchain was deemed necessary. PoW blockchains record cumulative PoW directly on the blockchain, making the data structure statistically resistant to attacks or modifications. BTC was excluded due to high transaction fees and a limited block size. Apart from Bitcoin SV, the remaining options were:
 
