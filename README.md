@@ -288,6 +288,7 @@ Below we provide a detailed implementation of the BSV DID Method as a reference 
 > _Figure 5: Create DID_
 
 <br>
+<br>
 
 **F) Key Considerations** 
 * **Proving Ownership:** The DID Subject demonstrates ownership of their private key by signing transaction **Tx1** and sending it to the DID Controller.
@@ -317,9 +318,9 @@ In this section we explain how to change the content of the DID Document. The DI
 
 <br>
 
-![Figure 6: Status Update](https://github.com/user-attachments/assets/617387e6-85f9-4b96-9ab2-e1bb994d5c5e)
+![Figure 6_Status Update](https://github.com/user-attachments/assets/6556622d-a463-458d-a5c8-7a167011c7db)
 
-_Figure 6: Status Update_
+> _Figure 6: Status Update_
 
 <br>
 
