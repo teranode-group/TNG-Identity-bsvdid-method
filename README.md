@@ -2,27 +2,50 @@
 
 ## Contents
 
-- ABSTRACT
-- INTRODUCTION
-    - Purpose
-    - Intended audience
-    - Scope
-    - Compliance
-    - Terminology
-- SPECIFICATION OVERVIEW
-    - Prerequisites
-    - UTXO DID Method
-    - DID Controller and DID Resolver
-    - DID Operations
-- GOVERNANCE MODEL USING DID BSV METHOD
-- LOW LATENCY DID RESOLUTION
-- DATA REGISTER ANALYSIS
-- PRIVACY CONSIDERATIONS
-- UTXO DID METHOD NORMATIVE REFERENCE
-    - DID Syntax
-    - Verifiable Data Registry
-    - DID Operations
-- REFERENCES AND READING MATERIAL
+- [ABSTRACT](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#1-abstract)
+- [INTRODUCTION](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#2-introduction)
+    - [Purpose](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#21-purpose)
+    - [Intended audience](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#22-intended-audience)
+    - [Scope](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#23-scope)
+    - [Compliance](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#24-compliance)
+    - [Terminology](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#25-terminology)
+- [SPECIFICATION OVERVIEW](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#3-specification-overview)
+    - [Prerequisites](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#31-prerequisites)
+    - [UTXO DID Method](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#32-utxo-did-method)
+        - [The DID](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#33-did-controller-and-did-resolver)
+        - [DID Document](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#322-the-did-document)
+        - [DID Document Data Model](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#3221-the-did-document-data-model)     
+    - [DID Controller and DID Resolver](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#33-did-controller-and-did-resolver)
+        - [DID Controller](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#331-did-controller)
+        - [DID Resolver](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#332-did-resolver) 
+    - [DID Operations](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#34-did-operations)
+        - [Create](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#341-create)
+        - [Resolve](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#342-resolve)
+        - [Update](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#343-update)
+        - [Revoke](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#344-revoke)
+        - [DID Document Data Modal](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#3221-the-did-document-data-model) 
+- [GOVERNANCE MODEL USING DID BSV METHOD](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#4-governance-model-using-did-bsv-method)
+- [LOW LATENCY DID RESOLUTION](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#4-governance-model-using-did-bsv-method)
+    - [Timing and Latency in DID Resolution Processes](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#timing-and-latency-in-did-resolution-processes)
+    - [User-Controlled Security through Miner Block Validation](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#user-controlled-security-through-miner-block-validation)
+- [DATA REGISTER ANALYSIS](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#6-data-register-analysis)
+    - [Distributed Ledger Technology](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#61-distributed-ledger-technology)
+    - [Why not others? Ledger Comparison Analysis](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#62-why-not-others-ledger-comparison-analysis)
+- [PRIVACY CONSIDERATIONS](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#7-privacy-considerations)
+- [UTXO DID METHOD NORMATIVE REFERENCE](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#8-utxo-did-method-normative-reference)
+    - [DID Syntax](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#81-did-syntax)
+    - [Verifiable Data Registry](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#82-verifiable-data-registry)
+        - [DID Issuance Transaction](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#821-did-issuance-transaction)
+        - [DID Document Transaction](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#822-did-document-transaction)
+        - [DID Revocation Transaction](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#823-did-revocation-transaction)
+        - [DID Funding Transaction](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#824-did-funding-transaction)
+        - [Example of DID Transaction Chain](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#825-example-of-did-transaction-chain)
+    - [DID Operations](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#83-did-operations)
+        - [DID Creation](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#831-did-creation)
+        - [DID Document Update](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#832-did-document-updates)
+        - [DID Deactivation](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#833-did-deactivation)
+        - [DID Resolution](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#834-did-resolution)
+- [REFERENCES AND READING MATERIAL](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#834-did-resolution)
 
 ---
 # Main Title
@@ -30,13 +53,16 @@
 ## 1. Abstract
 This document outlines a method for the issuance, status updates, key rotation, and revocation of Decentralized Identifiers (DIDs) using a public, UTXO-based blockchain as a data registry. In this approach, DIDs are issued and managed through transactions recorded on the blockchain, leveraging its transparency and immutability. The blockchain allows a UTXO to be spent only once, which provides a double spend protection, resulting in a final spent state that is permanent and verified by the network. This characteristic makes the UTXO model ideal for reflecting the status of a DID, such as revocation, which, is irreversible once executed. DIDs can also be updated by linking a transaction chain to the DID Document, with a new version controlled solely by the DID Controller. Our approach supports both issuer-initiated and user-initiated status updates and revocation requests, ensuring secure and verifiable DID management within a distributed ecosystem. This document describes key rotation methods for DID recovery. We described a proposal to accomplish low latency for DID resolution and a governance mechanism to guide the implementation and deployment of DIDs, emphasizing the critical role of the blockchain in maintaining a reliable and transparent data registry. 
 
+<br>
+<br>
+
 ---
 
 ## 2. Introduction
 
 ### 2.1 Purpose 
 
-The purpose of this documentation is to specify a DID method for DID issuance and management. This method is aimed to follow W3C specifications. The main differentiator is to feature an enhanced DID Document status update and revocation method that can be implemented in any public, UTXO blockchain used as the data register. The advantages are a follow. 
+The purpose of this documentation is to specify a DID method for DID issuance and management. This method is aimed to follow W3C specifications. The main differentiator is to feature an enhanced DID Document status update and revocation method that can be implemented in any public, UTXO blockchain used as the data register. There are several UTXO-based blockchains currently deployed in the industry (Specific examples: Bitcoin, Litecoin, Cardano, Bitcoin Cash, Zcash). The DID method detailed in this documentation can be applied to all UTXO-based blockchains, making it suitable for use across these networks. We are aiming for compatibility and consistency, regardless of the specific underlying UTXO architecture. The advantages are list bellow: 
 * The double spend protection of blockchain means that transaction chains provide an immutable, unique, timestamped sequence of events. We use this to record DID issuance, status update, key rotation, and revocation. UTXO-based blockchains support parallelisation of transaction validation which makes them scalable.
 * The digital signatures already present in blockchain transactions are used to provide the DID authorisation system. It supports hierarchal public key infrastructure that establishes governance and hierarchical authorisation over DID issuance.
 * The programmability of blockchain transactions means that multi-party authorisation schemes can be easily implemented. For example, by allowing either a DID Controller or a DID Subject to revoke a DID using a 1-of-2 multi-signature scheme in a transaction locking script.
@@ -68,7 +94,10 @@ Our implementation of the DID method can appropriately handle and enforce the is
 
 ### 2.5 Terminology
 
-Please review terminology here. 
+[Please review terminology here](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/Terminology.md). 
+
+<br>
+<br>
 
 ---
 
@@ -113,9 +142,9 @@ _1. Representation of a DID as per W3C specification_
 DID:example:123456789abcdefghi
 ```
 Where fields are broken down as follows:
-| DID:     | example:     | 123456789abcdefghi          |
-|----------|--------------|-----------------------------|
 | Scheme | DID Method | DID Method- Specific Identifier |
+|----------|--------------|-----------------------------|
+| DID:     | example:     | 123456789abcdefghi          |
 
 <br>
 <br>
@@ -126,9 +155,11 @@ _2. Representation of a DID using UTXO method_
 DID:bsv:21f2dae26817752b8f92c51a49a898e287ad133a4e7ed64b4909f7b62f0bbb6e
 ```
 Where fields are broken down as follows:
-| DID:     | bsv:     | 21f2dae26817752b8f92c51a49a898e287ad133a4e7ed64b4909f7b62f0bbb6e|
-|----------|--------------|-----------------------------|
 | Scheme | DID Method | DID Method- Specific Identifier |
+|----------|--------------|-----------------------------|
+| DID:     | Blockchian     | TXID                      | 
+| DID:     | bsv:     | 21f2dae26817752b8f92c51a49a898e287ad133a4e7ed64b4909f7b62f0bbb6e| 
+
 
 <br>
 
@@ -136,9 +167,9 @@ Where fields are broken down as follows:
 
 The DID Document is published via a subsequent transaction **Tx1** that spends the output of **Tx0**. The relationship between the DID, the DID document, and the blockchain transactions is given in Figure 1.  The transaction **Tx1** contains a single input and a single output. The output contains the locking script, the DID Document and the funds covering the mining fee of the next transaction. **Tx1** spending the output of **Tx0** allows an external observer to conclude that there is a link between both blockchain transactions. The status of **Tx1** output indicates the latest status of the DID Document. 
 
-![Figure 1: DID UTXO Status)](https://github.com/user-attachments/assets/11048f33-069b-44aa-9615-fecaf6e11e3f)
+![Figure 1_DID UTXO Status](https://github.com/user-attachments/assets/0cfebe93-f4ae-4432-967a-98441c25c0c8)
 
-_Figure 1: DID UTXO Status_
+> _Figure 1: DID UTXO Status_
 
 <br>
 <br>
@@ -190,9 +221,9 @@ The verifier can request DID status using a DID resolver. Verifiers can build an
 
 <br> 
 
-![Figure 2: DID Creation](https://github.com/user-attachments/assets/a21c1751-94af-448d-abf3-4f7c6e64d5e9)
+![Figure 2_DID Creation](https://github.com/user-attachments/assets/5e8807a4-3a7d-47bf-9058-761e2dde8ac3)
 
-_Figure 2: DID Creation_
+> _Figure 2: DID Creation_
 
 <br>
 
@@ -225,15 +256,15 @@ The Subject has a single key.
 
 <br> 
 
-![Figure 3: TX Anatomy](https://github.com/user-attachments/assets/19d37e3a-f249-4a01-806b-939ade99c7d1)
+![Figure 3_TX Anatomy](https://github.com/user-attachments/assets/b00ac2d0-3a3d-4b06-aac6-f9a529477d0a)
 
-_Figure 3: TX Anatomy_
+> _Figure 3: TX Anatomy_
 
 <br> 
 
-![Figure 4: How the Subject and the Controller keys are link to the DID?](https://github.com/user-attachments/assets/ca6b2419-2232-4933-9dce-880b6353aa72)
+![Figure 4_How the Subject and the Controller keys are link to the DID?](https://github.com/user-attachments/assets/87860062-7088-4c55-a0c4-78160d22a381)
 
-_Figure 4: How the Subject and the Controller keys are link to the DID?_
+> _Figure 4: How the Subject and the Controller keys are link to the DID?_
 
 <br>
 
@@ -254,10 +285,11 @@ Below we provide a detailed implementation of the BSV DID Method as a reference 
 
 <br>
 
-![Frame 5: Create DID](https://github.com/user-attachments/assets/53cdaec0-f189-40ae-ad77-e6a64d44478f)
+![Frame 5_Create DID](https://github.com/user-attachments/assets/91b735a3-b412-4582-9ed5-68210617d430)
 
-_Figure 5: Create DID_
+> _Figure 5: Create DID_
 
+<br>
 <br>
 
 **F) Key Considerations** 
@@ -288,9 +320,9 @@ In this section we explain how to change the content of the DID Document. The DI
 
 <br>
 
-![Figure 6: Status Update](https://github.com/user-attachments/assets/617387e6-85f9-4b96-9ab2-e1bb994d5c5e)
+![Figure 6_Status Update](https://github.com/user-attachments/assets/6556622d-a463-458d-a5c8-7a167011c7db)
 
-_Figure 6: Status Update_
+> _Figure 6: Status Update_
 
 <br>
 
@@ -320,9 +352,9 @@ Both subject and controller can initiate rotation of keys. How the rotation is p
 
 <br> 
 
-![Figure 7: DID Key Rotation](https://github.com/user-attachments/assets/67902047-e25e-4a8d-b727-83d7b39c94bc)
+![Figure 7_DID Key Rotation](https://github.com/user-attachments/assets/44f3484c-5049-4fd6-96a0-dcb2691a3160)
 
-_Figure 7: DID Key Rotation_
+> _Figure 7: DID Key Rotation_
 
 <br> 
 
@@ -342,9 +374,9 @@ A new DID issuance and DID Document transaction is funded using a new Master Key
 
 <br> 
 
-![Figure 8: DID Master Key Rotation](https://github.com/user-attachments/assets/c792bf3c-e53b-4a8a-b7ce-323bfb604586)
+![Figure 8_DID Master Key rotation](https://github.com/user-attachments/assets/54e6702e-d481-47c4-829a-1c0895f602ee)
 
-_* Figure 8: Notification of key rotation of end-user is a user experience decision, configurable and not mandatory. Invalid signatures will be rejected by blockchain_
+> _* Figure 8: Notification of key rotation of end-user is a user experience decision, configurable and not mandatory. Invalid signatures will be rejected by blockchain_
 
 <br> 
 <br> 
@@ -355,9 +387,9 @@ When a Controller needs to execute the rotation of their Controller Key associat
 
 <br> 
 
-![Figure 9: Tx Anatomy](https://github.com/user-attachments/assets/f198059d-de49-4fc6-b0a7-c097af2cb430)
+![Figure 9_TX Anatomy](https://github.com/user-attachments/assets/8b48bdee-2fd9-44e5-b0bc-29010cf9bb05)
 
-_Figure 9: Tx Anatomy_
+> _Figure 9: Tx Anatomy_
 
 <br> 
 <br>
@@ -374,16 +406,16 @@ In all cases the revocation is initiated by the DID Subject.
 
 <br> 
 
-![Figure 10: DID Revocation initiated by DID Subject](https://github.com/user-attachments/assets/937fac6e-6282-4cbd-b4ba-021d81cebe27)
+![Figure 10_DID Revocation Initiated by Subject](https://github.com/user-attachments/assets/78133ef7-9bfe-4f93-b95b-14f24b959b2b)
 
-_Figure 10: DID Revocation initiated by DID Subject_
+> _Figure 10: DID Revocation initiated by DID Subject_
 
 <br> 
 <br>
 
-![Figure 11: DID Revocation initiated by DID Controller](https://github.com/user-attachments/assets/34f940ec-d746-498b-9a3a-f45d195d747b)
+![Figure 11_DID Revocation Initiated by Controller](https://github.com/user-attachments/assets/70fe4041-ec3f-4423-b53b-1db271ac92fc)
 
-_Figure 11: DID Revocation initiated by DID Controller_
+> _Figure 11: DID Revocation initiated by DID Controller_
 
 <br> 
 <br>
@@ -479,17 +511,16 @@ This section outlines the technical reasons for choosing Bitcoin SV, including r
 
 Between 2017 and 2018, three distinct blockchain protocols emerged from Bitcoin's original protocol, sharing a history that dates to the genesis block. These are BTC, BCH, and BSV (Bitcoin SV). The BSV Blockchain ledger is a distributed platform that provides scalability, transparency, immutability, and efficient data consumption. Data can be published on the blockchain and retrieved within blockchain transactions.
 
-Bitcoin SV typically produces blocks larger than 1GB, with the maximum recorded block size being 4 GB [3], and it supports a high transaction throughput of up to 5,100 blockchain transactions per second (tps) [4]. It accommodates large transaction sizes, with a record of a 42MB transaction [3] and has a default maximum script size of 500kB [3]. It also includes a complete set of opcodes and supports big integer arithmetic in-script [3]. Previously, we presented a solution based on the Bitcoin SV protocol for blockchain transactions, which can be easily adapted to any UTXO-based blockchain. illustrates a simplified schematic of a Bitcoin transaction. This transaction fee is the lowest among Proof of Work (PoW) blockchains [3].
+Bitcoin SV typically produces blocks larger than 1GB, with the maximum recorded block size being 4 GB [[3](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#9references-and-reading-material)], and it supports a high transaction throughput of up to 5,100 blockchain transactions per second (tps) [[4](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#9references-and-reading-material)]. It accommodates large transaction sizes, with a record of a 42MB transaction [[3](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#9references-and-reading-material)] and has a default maximum script size of 500kB [[3](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#9references-and-reading-material)]. It also includes a complete set of opcodes and supports big integer arithmetic in-script [[3](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#9references-and-reading-material)]. Previously, we presented a solution based on the Bitcoin SV protocol for blockchain transactions, which can be easily adapted to any UTXO-based blockchain. illustrates a simplified schematic of a Bitcoin transaction. This transaction fee is the lowest among Proof of Work (PoW) blockchains [[3](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#9references-and-reading-material)].
 
 <br> 
-<br> 
 
-#### 6.2 Why not others? Ledger Comparison Analysis 
+### 6.2 Why not others? Ledger Comparison Analysis 
 
 Given the project's requirements, a Proof of Work (PoW), public, and permissionless blockchain was deemed necessary. PoW blockchains record cumulative PoW directly on the blockchain, making the data structure statistically resistant to attacks or modifications. BTC was excluded due to high transaction fees and a limited block size. Apart from Bitcoin SV, the remaining options were:
 
 * **BCH:** A UTXO- PoW ledger with a maximum block size of 32MB. Although BCH has a higher transactions per second (TPS) rate than BTC, its transaction processing remains limited and while transaction fees are lower in average than BTC, they are still relatively high for the needs of this project. 
-* **Ethereum (ETH):** Previously a PoW ledger, now using Proof of Stake (PoS) as its consensus mechanism. All statements and data refer to ETH before this change. ETH is an account-based PoW ledger with an integrated smart contract layer that maintains a global state, posing scalability challenges [3]. The new adopted consensus mechanism allows ETH to process block faster than BTC and BCH and BSV. The transaction structure of an Ethereum will request, most likely to utilise a token protocol to store and monitor the DID Document. ERC-20, their most adopted token protocol overage transaction fee remains considerable large for the purpose of this project and as the complexity of the smart contract increases, so does the gas fee. ETH has the highest average transaction fees among blockchains.
+* **Ethereum (ETH):** Previously a PoW ledger, now using Proof of Stake (PoS) as its consensus mechanism. All statements and data refer to ETH before this change. ETH is an account-based PoW ledger with an integrated smart contract layer that maintains a global state, posing scalability challenges [[3](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#9references-and-reading-material)]. The new adopted consensus mechanism allows ETH to process block faster than BTC and BCH and BSV. The transaction structure of an Ethereum will request, most likely to utilise a token protocol to store and monitor the DID Document. ERC-20, their most adopted token protocol overage transaction fee remains considerable large for the purpose of this project and as the complexity of the smart contract increases, so does the gas fee. ETH has the highest average transaction fees among blockchains.
 * **Private ledgers,** such as Hyperledger, were not considered since solutions built on these ledgers incur higher costs for implementation, maintenance, transaction fees and conventionally single authorities running the infrastructure
 
 Our solution requires high-volume transaction processing at low cost, as well as maintaining data integrity over time and across parties involved. Immutability and alteration records should be enforced by an independent process: the consensus mechanism. Additionally, it does not require the execution of any programmatic function at the miner level, avoiding execution costs in transaction fees. Lastly in BSV there’s the 'first-seen rule' which means that miners will not accept a double-spend before block publication even for a higher fee if a miner receives a transaction, they verify it is correct, then accept it as valid. This means they will not accept a double-spend of the same input. Then add the transaction in the mempool. It may appear in the next block, or the block after. For these reasons, we decided to implement the solution using Bitcoin SV, benefiting from its scalability, low cost, and data integrity provided by PoW.
@@ -755,6 +786,12 @@ If versionId query is present, the algorithm must modify steps 3.1 to read:
 ---
 # 9.References and Reading Material
 
+|   |                            Specification                                           | Description                |
+|---|------------------------------------------------------------------------------------|-----------------------------|
+| [1] | [1EdTech Revocation List Status Method](https://imsglobal.org/spec/vcrl/v1p0/)     | A simple list-based mechanism for publishing and checking the revocation status of a verifiable credential Maintainer: 1EdTech ([Email](mailto:contact@imsglobal.org)) ([Website](https://www.1edtech.org/)) |
+| [2] | [Ethr Revocation 2022](https://spherity.github.io/vc-ethr-revocation-registry/)    | An Ethereum, EIP-5539 compliant and registry-based revocation mechanism for Verifiable Credentials Maintainer: Spherity GmbH ([email](mailto:lauritz.leifermann@spherity.com)) ([website](https://www.spherity.com/))| 
+| [3] | [Whats on Chain](https://whatsonchain.com/stats)    | Stats |
+| [4] | [https://www.bsvblockchain.org/compare](https://www.bsvblockchain.org/compare) | Stats |
 
 
  
