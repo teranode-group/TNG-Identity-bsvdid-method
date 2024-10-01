@@ -94,7 +94,7 @@ Our implementation of the DID method can appropriately handle and enforce the is
 
 ### 2.5 Terminology
 
-Please review terminology here. 
+[Please review terminology here](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/Terminology.md). 
 
 <br>
 <br>
