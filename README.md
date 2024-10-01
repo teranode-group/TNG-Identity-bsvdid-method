@@ -350,9 +350,9 @@ Both subject and controller can initiate rotation of keys. How the rotation is p
 
 <br> 
 
-![Figure 7: DID Key Rotation](https://github.com/user-attachments/assets/67902047-e25e-4a8d-b727-83d7b39c94bc)
+![Figure 7_DID Key Rotation](https://github.com/user-attachments/assets/44f3484c-5049-4fd6-96a0-dcb2691a3160)
 
-_Figure 7: DID Key Rotation_
+> _Figure 7: DID Key Rotation_
 
 <br> 
 
@@ -372,9 +372,9 @@ A new DID issuance and DID Document transaction is funded using a new Master Key
 
 <br> 
 
-![Figure 8: DID Master Key Rotation](https://github.com/user-attachments/assets/c792bf3c-e53b-4a8a-b7ce-323bfb604586)
+![Figure 8_DID Master Key rotation](https://github.com/user-attachments/assets/54e6702e-d481-47c4-829a-1c0895f602ee)
 
-_* Figure 8: Notification of key rotation of end-user is a user experience decision, configurable and not mandatory. Invalid signatures will be rejected by blockchain_
+> _* Figure 8: Notification of key rotation of end-user is a user experience decision, configurable and not mandatory. Invalid signatures will be rejected by blockchain_
 
 <br> 
 <br> 
@@ -385,9 +385,9 @@ When a Controller needs to execute the rotation of their Controller Key associat
 
 <br> 
 
-![Figure 9: Tx Anatomy](https://github.com/user-attachments/assets/f198059d-de49-4fc6-b0a7-c097af2cb430)
+![Figure 9_TX Anatomy](https://github.com/user-attachments/assets/8b48bdee-2fd9-44e5-b0bc-29010cf9bb05)
 
-_Figure 9: Tx Anatomy_
+> _Figure 9: Tx Anatomy_
 
 <br> 
 <br>
@@ -404,16 +404,16 @@ In all cases the revocation is initiated by the DID Subject.
 
 <br> 
 
-![Figure 10: DID Revocation initiated by DID Subject](https://github.com/user-attachments/assets/937fac6e-6282-4cbd-b4ba-021d81cebe27)
+![Figure 10_DID Revocation Initiated by Subject](https://github.com/user-attachments/assets/78133ef7-9bfe-4f93-b95b-14f24b959b2b)
 
-_Figure 10: DID Revocation initiated by DID Subject_
+> _Figure 10: DID Revocation initiated by DID Subject_
 
 <br> 
 <br>
 
-![Figure 11: DID Revocation initiated by DID Controller](https://github.com/user-attachments/assets/34f940ec-d746-498b-9a3a-f45d195d747b)
+![Figure 11_DID Revocation Initiated by Controller](https://github.com/user-attachments/assets/70fe4041-ec3f-4423-b53b-1db271ac92fc)
 
-_Figure 11: DID Revocation initiated by DID Controller_
+> _Figure 11: DID Revocation initiated by DID Controller_
 
 <br> 
 <br>
