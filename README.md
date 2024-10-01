@@ -142,9 +142,9 @@ _1. Representation of a DID as per W3C specification_
 DID:example:123456789abcdefghi
 ```
 Where fields are broken down as follows:
-| DID:     | example:     | 123456789abcdefghi          |
-|----------|--------------|-----------------------------|
 | Scheme | DID Method | DID Method- Specific Identifier |
+|----------|--------------|-----------------------------|
+| DID:     | example:     | 123456789abcdefghi          |
 
 <br>
 <br>
@@ -155,9 +155,11 @@ _2. Representation of a DID using UTXO method_
 DID:bsv:21f2dae26817752b8f92c51a49a898e287ad133a4e7ed64b4909f7b62f0bbb6e
 ```
 Where fields are broken down as follows:
-| DID:     | bsv:     | 21f2dae26817752b8f92c51a49a898e287ad133a4e7ed64b4909f7b62f0bbb6e|
-|----------|--------------|-----------------------------|
 | Scheme | DID Method | DID Method- Specific Identifier |
+|----------|--------------|-----------------------------|
+| DID:     | Blockchian     | TXID                      | 
+| DID:     | bsv:     | 21f2dae26817752b8f92c51a49a898e287ad133a4e7ed64b4909f7b62f0bbb6e| 
+
 
 <br>
 
@@ -784,6 +786,12 @@ If versionId query is present, the algorithm must modify steps 3.1 to read:
 ---
 # 9.References and Reading Material
 
+|   |                            Specification                                           | Description                |
+|---|------------------------------------------------------------------------------------|-----------------------------|
+| [1] | [1EdTech Revocation List Status Method](https://imsglobal.org/spec/vcrl/v1p0/)     | A simple list-based mechanism for publishing and checking the revocation status of a verifiable credential Maintainer: 1EdTech ([Email](mailto:contact@imsglobal.org)) ([Website](https://www.1edtech.org/)) |
+| [2] | [Ethr Revocation 2022](https://spherity.github.io/vc-ethr-revocation-registry/)    | An Ethereum, EIP-5539 compliant and registry-based revocation mechanism for Verifiable Credentials Maintainer: Spherity GmbH ([email](mailto:lauritz.leifermann@spherity.com)) ([website](https://www.spherity.com/))| 
+| [3] | [Whats on Chain](https://whatsonchain.com/stats))    | Stats |
+| [4] | [https://www.bsvblockchain.org/compare](https://www.bsvblockchain.org/compare) | Stats |
 
 
  
