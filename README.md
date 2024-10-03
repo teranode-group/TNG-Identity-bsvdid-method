@@ -16,6 +16,9 @@
 - Robert Alizon
 - Liuxuan Pan
 
+Feedback 
+- Issues: https://github.com/nchain-research/nChain-Identity-bsvdid-method/issues
+
 <br> 
 <br> 
 
