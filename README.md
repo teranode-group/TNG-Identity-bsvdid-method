@@ -534,10 +534,26 @@ Our solution requires high-volume transaction processing at low cost, as well as
 
 _THIS SECTION IS NOT NORMATIVE_
 
-One of the main features of this DID method is to enhance immediate revocation. The verification process is independent of the issuer and does not necessarily require a trusted service provider. This means that no single entity can track the holder’s usage of their credentials. The request of the status check on a specific credential is intentionally made without providing context to the blockchain network (blockchain nodes) and completely independently from the Issuer.  Even when a single blockchain node is queried, the node would not be able to link the query to a credential or to a credential holder. This enhanced in privacy would not be possible with traditional approaches. 
+This section covers security considerations for the UTXO-DID Method. We discuss key storage and protection, usage policies, and security and privacy best practices.
+
+<br> 
+
+### 7.1 Data minimisation and Personal identifiable information best practices 
+The UTXO-DID Method does not store, linked or added personally identifiable information (PII) to the DID, to the DID Document or the transaction that resolves the DID and its associated DID Document. The network is public and immutable, meaning once data is included, it cannot be fully erased.
 
 <br> 
 <br> 
+
+### 7.2 DID Correlation Risk 
+There is a potential risk of identities being linked if they are used frequently or if their usage becomes publicly accessible. This introduces correlation risks, as detailed in [DID Correlation Risks](https://www.w3.org/TR/did-core/#did-correlation-risks). Below we list best practices to help mitigate the risks of DID correlation:
+* If a DID is compromised or the user is uncomfortable with its exposure, the DID subject can deactivate it by spending the associated output. Since TxIDs linked to DIDs are excluded from the transaction payment process, the only way to associate payments with identities is through Verifiable Credentials (VCs). 
+* To address the privacy concerns of transaction linkability in the UTXO-DID Method, users can create an unlimited number of DIDs, allowing them to improve their privacy by utilising different identities for various purposes.
+* If you are a verifier, and a subject has shared a DID associated with a VC containing personal information, do not share the verification history with other verifiers to protect the subject's privacy.
+
+<br> 
+<br> 
+
+
 
 ---
 
