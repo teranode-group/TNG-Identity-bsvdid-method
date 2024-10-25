@@ -279,6 +279,7 @@ The Subject has a single key.
 <br> 
 
 ![Figure 3_TX Anatomy](https://github.com/user-attachments/assets/b00ac2d0-3a3d-4b06-aac6-f9a529477d0a)
+-
 
 > _Figure 3: TX Anatomy_
 
@@ -286,7 +287,7 @@ The Subject has a single key.
 
 ![Figure 4_How the Subject and the Controller keys are link to the DID?](https://github.com/user-attachments/assets/87860062-7088-4c55-a0c4-78160d22a381)
 
-> _Figure 4: How the Subject and the Controller keys are link to the DID?_
+> _Figure 4: How are the Subject and the Controller keys linked to the DID?_
 
 <br>
 
