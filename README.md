@@ -86,7 +86,7 @@ This document outlines a method for the issuance, status updates, key rotation, 
 
 The purpose of this documentation is to specify a DID method for DID issuance and management. This method is aimed to follow W3C specifications. The main differentiator is to feature an enhanced DID Document status update and revocation method that can be implemented in any UTXO blockchain used as the data register. There are several UTXO-based blockchains currently deployed in the industry (Specific examples: Bitcoin, Litecoin, Cardano, Bitcoin Cash, Zcash). The DID method detailed in this documentation can be applied to all UTXO-based blockchains, making it suitable for use across these networks. We are aiming for interoperability and consistency, regardless of the specific underlying UTXO architecture. The advantages are listed below: 
 * The double spend protection of blockchain means that transaction chains provide an immutable, unique, timestamped sequence of events. We use this to record DID issuance, status update, key rotation, and revocation. UTXO-based blockchains support parallelisation of transaction validation which makes them scalable.
-* The digital signatures already present in blockchain transactions are used to provide the DID authorisation system. It supports hierarchal public key infrastructure that establishes governance and hierarchical authorisation over DID issuance, if one needs to have governance or control over DID in a public blockchain.
+* The digital signatures already present in blockchain transactions are used to provide the DID authorisation system. It supports hierarchical public key infrastructure that establishes governance and hierarchical authorisation over DID issuance, if one needs to have governance or control over DID in a public blockchain.
 * The programmability of blockchain transactions means that multi-party authorisation schemes can be easily implemented. For example, by allowing either a DID Controller or a DID Subject to revoke a DID using a 1-of-2 multi-signature scheme in a transaction locking script.
 
 <br>
@@ -155,7 +155,7 @@ The UTXO DID method uses the following method name: **bsv**
 
 #### 3.2.1 The DID
 
-The issuance of a DID using this method is performed by publishing a blockchain transaction:**Tx0**.This transaction has a single input and a single output. The transaction ID (**TxID**) becomes the DID for the subject. The **TxID** can be easily calculated by either controller or subject and, because of the properties of blockchain it would never be repeated. It is also 
+The issuance of a DID using this method is performed by publishing a blockchain transaction:**Tx0**. This transaction has a single input and a single output. The transaction ID (**TxID**) becomes the DID for the subject. The **TxID** can be easily calculated by either controller or subject and, because of the properties of blockchain it would never be repeated. It is also 
 easily recognisable by independent third-party platforms, such as blockchain explorers. 
 
 _1. Representation of a DID as per W3C specification_
@@ -164,7 +164,7 @@ _1. Representation of a DID as per W3C specification_
 DID:example:123456789abcdefghi
 ```
 Where fields are broken down as follows:
-| Scheme | DID Method | DID Method- Specific Identifier |
+| Scheme | DID Method | DID Method-Specific Identifier |
 |----------|--------------|-----------------------------|
 | DID:     | example:     | 123456789abcdefghi          |
 
@@ -177,9 +177,9 @@ _2. Representation of a DID using UTXO method_
 DID:bsv:21f2dae26817752b8f92c51a49a898e287ad133a4e7ed64b4909f7b62f0bbb6e
 ```
 Where fields are broken down as follows:
-| Scheme | DID Method | DID Method- Specific Identifier |
+| Scheme | DID Method | DID Method-Specific Identifier |
 |----------|--------------|-----------------------------|
-| DID:     | Blockchian     | TXID                      | 
+| DID:     | Blockchain     | TXID                      | 
 | DID:     | bsv:     | 21f2dae26817752b8f92c51a49a898e287ad133a4e7ed64b4909f7b62f0bbb6e| 
 
 
@@ -226,7 +226,7 @@ Our current implementation uses [W3C DID Document Data Model](https://www.w3.org
 
 #### 3.3.1 DID Controller 
 
-As described in W3C, the DID Controller is an entity that has the capability to make changes to a DID document. A DID Controller is not a central registration authority, subjects can be identified by multiple DIDs issued by different DID Controllers. Initially the DID Controller is required to create an identity for itself. The process describe here is the same required for an external Subject DID Creation: the DID controller requires an issuance transaction **Tx0’***, locked to its own public key PKC0 and the “subject” public key PKCD. In this case, the subject is the controller itself. The transaction ID of **Tx0’**, **TxID0’** becomes the DID of the Controller. To generate the subsequent transaction that will contain the Controllers DID Document, the controller will sign the transaction using two public keys: PKCD and PKC0, both of which belong to the Controller. **Tx1’** input spends the output of **Tx0’**.
+As described in W3C, the DID Controller is an entity that has the capability to make changes to a DID document. A DID Controller is not a central registration authority, subjects can be identified by multiple DIDs issued by different DID Controllers. Initially the DID Controller is required to create an identity for itself. The process describe here is the same required for an external Subject DID Creation: the DID controller requires an issuance transaction **Tx0’**, locked to its own public key PKC0 and the “subject” public key PKCD. In this case, the subject is the controller itself. The transaction ID of **Tx0’**, **TxID0’** becomes the DID of the Controller. To generate the subsequent transaction that will contain the Controllers DID Document, the controller will sign the transaction using two public keys: PKCD and PKC0, both of which belong to the Controller. **Tx1’** input spends the output of **Tx0’**.
 
 When requested by the subject, the DID Controller issues a new DID by creating and broadcasting two blockchain transactions: an Issuance and DID Document transaction. The issuance transaction, Tx0 is created by the DID Controller and provisioned (funded) by controller. UTXO of **Tx0** should provide enough funds to cover the mining fee for the next transaction.  The transaction ID of **Tx0**, **TxID0** becomes the DID of the Subject. The DID Document is contained in the subsequent transaction **Tx1**, linked to the issuance transaction Tx0 by spending its output. **Tx1** has a single output; that contains a payload with the DID Document and the minimal required funding to cover the mining fee of the next transaction.
 
@@ -268,13 +268,13 @@ The Subject has a single key.
 <br>
 
 **A) TxID0: Issuance Transaction.** 
-<br> When a new DID is requested by the subject, the Controller will create an issuance transaction. This transaction locks the output to two public keys: the Controller's public key and the subject's public key. This initial transaction is necessary to initiate the DID Document process. is used in the DID string: __did:bsv:TxID0__ as the Subject’s DID. 
+<br> When a new DID is requested by the subject, the Controller will create an issuance transaction. This transaction locks the output to two public keys: the Controller's public key and the subject's public key. This initial transaction is necessary to initiate the DID Document process. The transaction ID of this transaction is used in the DID string: __did:bsv:TxID0__ as the Subject’s DID. 
 **Tx0** has a single input and a single output. The DID Document is published via a subsequent transaction **Tx1** that spends the output of **Tx0**. See Figure 3. Note that when the Controller is required to issue a DID for itself, the Issuance transaction locks the output to both controller’s public keys (PKCD and PKC0). *[See Section 3.3. DID Controller](https://github.com/nchain-research/nChain-Identity-bsvdid-method/blob/main/README.md#33-did-controller-and-did-resolver)* .  
 
 <br>
 
 **B) TxID1: DID Document transaction** 
-<br> This is a subsequent transaction that spends the output of the issuance transaction **Tx0**. This transaction has a single input and a single output. This output contains a data payload with the DID Document.  **Tx1** output is locked to a one-of-two multi-sig script signed either by Subject public key or the Controller public key. Once the input of **Tx1** is signed by both keys, the transaction is broadcasted to the network. When validated by miners it will read as resolved by the DID Resolver. 
+<br> This is a subsequent transaction that spends the output of the issuance transaction **Tx0**. This transaction has a single input and a single output. This output contains a data payload with the DID Document.  **Tx1** output is locked to a one-of-two multi-sig script signed either by Subject public key or the Controller public key. Once the input of **Tx1** is signed by both keys, the transaction is broadcast to the network. When validated by miners it will read as resolved by the DID Resolver. 
 
 <br> 
 
@@ -473,7 +473,7 @@ Each blockchain transaction refers to a previous blockchain transaction. Given a
 
 ### Timing and Latency in DID Resolution Processes 
 
-Currently, the DID resolver only searches for transactions in mined blocks. Given that the average time for a block to be mined is approximately 10 minutes, this forms the basis for the resolution time it takes for newly minted DIDs. Since broadcasted transactions are not subject to reorganization or modification in the mempool the mempool becomes the first trusted source of transaction status check. In addition, for this specific implementation and the blockchain network of used, which supports large blocks, allows most transactions in the mempool to be included in the following block, enhancing reliability in the mempool. The key innovation of this approach is that it accomplishes low resolution latency, but it shifts the responsibility of the stability of the DID Document from the DID Resolver to the requester of the status check. 
+Currently, the DID resolver only searches for transactions in mined blocks. Given that the average time for a block to be mined is approximately 10 minutes, this forms the basis for the resolution time it takes for newly minted DIDs. Since broadcast transactions are not subject to reorganization or modification in the mempool the mempool becomes the first trusted source of transaction status check. In addition, for this specific implementation and the blockchain network of used, which supports large blocks, allows most transactions in the mempool to be included in the following block, enhancing reliability in the mempool. The key innovation of this approach is that it accomplishes low resolution latency, but it shifts the responsibility of the stability of the DID Document from the DID Resolver to the requester of the status check. 
 
 
 ### User-Controlled Security through Miner Block Validation
