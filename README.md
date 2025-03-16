@@ -284,9 +284,9 @@ The Subject has a single key.
 
 <br> 
 
-![Figure 4_How the Subject and the Controller keys are link to the DID?](https://github.com/user-attachments/assets/87860062-7088-4c55-a0c4-78160d22a381)
+![Figure 4_How the Subject and the Controller keys are linked to the DID.](https://github.com/user-attachments/assets/87860062-7088-4c55-a0c4-78160d22a381)
 
-> _Figure 4: How the Subject and the Controller keys are link to the DID?_
+> _Figure 4: How the Subject and the Controller keys are linked to the DID._
 
 <br>
 
