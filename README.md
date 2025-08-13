@@ -1,6 +1,9 @@
 # DID:BSV Method Specification: A UTXO friendly method. 
 03 October 2024
 
+**This document is obsolete.**
+[New document can be found on this link.](https://docs.teranode.group/tng-identity-documentation/did/bsv-did-method-specifications/specification-overview/utxo-did-method-normative-reference)
+
 **Authors**
 - Thomas Moretti
 - Leon Mlakar
@@ -650,7 +653,8 @@ The timestamp of the block that contains the DID document transaction is the `ve
 
 The DID revocation is funded by the preceding DID document transaction. The transaction has one input which MUST spend the UTXO of the preceding DID document transaction. The transaction MUST one output with value 0, which makes it unspendable. The DID revocation transaction, when present, is thus the last transaction in the DID chain and invalidates the DID.
 
-The OTXO of DID revocation transaction MUST have value 0 and SHOULD have no other locking script but `OP_RETURN`.
+The OTXO of DID revocation transaction MUST have value 0 and SHOULD have no other locking script but `OP_FALSE OP_RETURN`.
+The first OP code should be `OP_FALSE` to prevent spending output.
 The first segment of the `OP_RETURN` data payload must be set to the string literal `BSVDID` .
 The second segment of the `OP_RETURN` payload MUST be set to `identityCode`.
 The third segment of the `OP_RETURN` data payload MUST be set to string literal 3 (numerical digit 3).
