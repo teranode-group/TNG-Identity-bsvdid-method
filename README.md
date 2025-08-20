@@ -33,7 +33,7 @@ This document outlines a method for the issuance, status updates, key rotation, 
 
 Full specification of DID:BSV method is here. [DID:BSV Method specification](https://docs.teranode.group/tng-identity-documentation/did/bsv-did-method-specifications/method-specification.-a-utxo-friendly-method) 
 
-
+Universal resolver documentation for DID:BSV method. [Universal resolver documentation](https://docs.teranode.group/tng-identity-documentation/did/bsv-did-universal-resolver)
 
  
  
