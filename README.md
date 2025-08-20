@@ -20,7 +20,7 @@
 - Liuxuan Pan
 
 Feedback 
-- Issues: https://github.com/nchain-research/nChain-Identity-bsvdid-method/issues
+- Issues: https://github.com/teranode-group/TNG-Identity-bsvdid-method/tree/main
 
 <br> 
 <br> 
